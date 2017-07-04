@@ -328,7 +328,7 @@ TODO
 
 ### 变量
 
-* 总是使用 `const` 来定义变量，避免使用 `var`。
+* 总是使用 `const` 来定义常量，避免使用 `var`。
 
     > 这能够确保你无法对变量重新赋值，在开发阶段就发现可能的问题。
     
@@ -342,7 +342,7 @@ TODO
     const b = 2;
     ```
 
-* 如果你需要为变量重新赋值，使用 `let` 而不是 `var`。
+* 如果你需要为引用重新赋值，使用 `let` 而不是 `var`。
 
     > `let` 是块作用域，`var` 是函数作用域。
 
@@ -379,6 +379,88 @@ TODO
     }
     console.log(a); // 引用错误：a未定义
     console.log(b); // 引用错误：b未定义
+    ```
+
+### 对象
+
+* 使用简洁语法创建对象。
+
+    ```js
+    // 不好
+    const item = new Object();
+
+    // 好
+    const item = {};
+    ```
+
+* 使用对象方法的简写。
+
+    ```js
+    // 不好
+    const atom = {
+        value: 1,
+
+        addValue: function (value) {
+            return atom.value + value;
+        },
+    };
+
+    // 好
+    const atom = {
+        value: 1,
+
+        addValue(value) {
+            return atom.value + value;
+        },
+    };
+    ```
+
+* 使用属性值的简写。
+
+    ```js
+    const name = 'Kathy';
+
+    // 不好
+    const obj = {
+        name: name,
+    };
+
+    // 好
+    const obj = {
+        name,
+    };
+    ```
+
+* 仅在无效的属性名上加引号。
+
+    > 一般来说，我们认为这在主观上更容易阅读。它改进了语法高亮，并且更容易被许多JS引擎优化。
+
+    ```js
+    // 不好
+    const bad = {
+        'foo': 3,
+        'bar': 4,
+        'data-blah': 5,
+    };
+
+    // 好
+    const good = {
+        foo: 3,
+        bar: 4,
+        'data-blah': 5,
+    };
+    ```
+
+* 不要直接使用 `Object.prototype` 上的方法，例如 `hasOwnProperty`，`isPrototypeOf` 等。
+
+    > 这些方法可能会被对象的属性覆盖，例如对象：`{hasOwnProperty: false}`，或者该对象的 `__proto__` 属性为 `null`，例如使用 `Object.create(null)` 创建的对象，就不存在这些方法了。
+
+    ```js
+    // 不好
+    console.log(obj.hasOwnProperty(key));
+
+    // 好
+    console.log(Object.prototype.hasOwnProperty.call(obj, key));
     ```
 
 ### 命名
