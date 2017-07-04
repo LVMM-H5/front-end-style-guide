@@ -70,7 +70,7 @@ TODO
     ```js
     // 不好
     if(true) {
-        done ();
+        done();
     }
 
     // 好
