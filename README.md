@@ -306,6 +306,26 @@ TODO
     }
     ```
 
+### 分号
+
+* 语句的结尾处必须要有分号。
+
+    ```js
+    // 不好
+    const name = 'ESLint'
+
+    object.method = () => {
+        // ...
+    }
+
+    // 好
+    const name = 'ESLint';
+
+    object.method = () => {
+        // ...
+    };
+    ```
+
 ### 变量
 
 * 总是使用 `const` 来定义变量，避免使用 `var`。
