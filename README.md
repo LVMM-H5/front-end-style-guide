@@ -208,6 +208,104 @@ TODO
     const person = {·name: 'Kathy'·};
     ```
 
+### 逗号
+
+* 不要将逗号放在前面。
+
+    ```js
+    // 不好
+    const story = [
+          once
+        , upon
+        , aTime
+    ];
+
+    // 好
+    const story = [
+        once,
+        upon,
+        aTime,
+    ];
+    ```
+
+* 多行情况下，最后一行的参数或属性的末尾添加额外逗号。
+
+    > 这会让 git 的差异列表更清晰。
+
+    ```diff
+    // 不好 - git 差异列表会展示 3 行改动
+    const hero = {
+         firstName: 'Florence',
+    -    lastName: 'Nightingale'
+    +    lastName: 'Nightingale',
+    +    inventorOf: ['coxcomb chart', 'modern nursing']
+    };
+
+    // 好 - git 差异列表会展示 1 行改动
+    const hero = {
+         firstName: 'Florence',
+         lastName: 'Nightingale',
+    +    inventorOf: ['coxcomb chart', 'modern nursing'],
+    };
+    ```
+
+    ```js
+    // 不好
+    const hero = {
+        firstName: 'Dana',
+        lastName: 'Scully'
+    };
+
+    const heroes = [
+        'Batman',
+        'Superman'
+    ];
+
+    // 好
+    const hero = {
+        firstName: 'Dana',
+        lastName: 'Scully',
+    };
+
+    const heroes = [
+        'Batman',
+        'Superman',
+    ];
+
+    // 不好
+    function createHero(
+        firstName,
+        lastName,
+        inventorOf
+    ) {
+        // does nothing
+    }
+
+    // 好
+    function createHero(
+        firstName,
+        lastName,
+        inventorOf,
+    ) {
+        // does nothing
+    }
+
+    // 好（注意：可变参数后面不可以有逗号）
+    function createHero(
+        firstName,
+        lastName,
+        inventorOf,
+        ...heroArgs
+    ) {
+        // does nothing
+    }
+
+    // 好（因为该条规则仅适用于多行）
+    function createHero(firstName, lastName, inventorOf) {
+        // does nothing
+    }
+    ```
+
 ### 变量
 
 * 总是使用 `const` 来定义变量，避免使用 `var`。
