@@ -526,6 +526,74 @@ TODO
     }
     ```
 
+### 字符串
+
+* 字符串使用单引号 `''`。
+
+    ```js
+    // 不好
+    const name = "Kathy";
+
+    // 不好 - 仅当字符串中需要插入变量或换行时才使用模板字符串
+    const name = `Kathy`;
+
+    // 好
+    const name = 'Kathy';
+    ```
+
+* 对于长字符串不要人为分割。
+
+    > 多数规范都不允许字符串过长，推荐进行字符串拼接分割，但事实上，长字符串分割之后将难以维护，并可能导致关键字搜索无效；而长字符串难以阅读的问题，使用现代编辑器就可以解决，以 Visual Studio Code 为例：点击查看 -> 切换自动换行。
+
+    ```js
+    // 不好
+    const errorMessage = 'This is a super long error that was thrown because ' +
+    'of Batman. When you stop to think about how Batman had anything to do ' +
+    'with this, you would get nowhere fast.';
+
+    // 不好
+    const errorMessage = 'This is a super long error that was thrown because \
+    of Batman. When you stop to think about how Batman had anything to do \
+    with this, you would get nowhere \
+    fast.';
+
+    // 好
+    const errorMessage = 'This is a super long error that was thrown because of Batman. When you stop to think about how Batman had anything to do with this, you would get nowhere fast.';
+    ```
+
+* 构建包含变量或换行的字符串时，使用模板字符串而不是字符串拼接。
+
+    ```js
+    // 不好
+    function sayHi(name) {
+        return 'How are you, ' + name + '?';
+    }
+
+    // 不好
+    function sayHi(name) {
+        return ['How are you, ', name, '?'].join();
+    }
+
+    // 好
+    function sayHi(name) {
+        return `How are you, ${name}?`;
+    }
+    ```
+
+* 不要对字符串使用 `eval()` 方法，它可能会导致很多漏洞。
+
+* 避免无意义的转义符 `\`。
+
+    > 转义符会降低可读性，应该仅在必要时才存在。
+
+    ```js
+    // 不好
+    const foo = '\'this\' \i\s \"quoted\"';
+
+    // 好 - 仅 this 前后的引号才需要转义
+    const foo = '\'this\' is "quoted"';
+    ```
+
 ### 命名
 
 * 避免使用单一字母命名，让你的名字具有实际含义。
