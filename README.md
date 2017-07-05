@@ -582,6 +582,11 @@ TODO
 
 * 不要对字符串使用 `eval()` 方法，它可能会导致很多漏洞。
 
+    ```js
+    // 不好
+    var result = eval('(function() { const a = 1; return a; }());');
+    ```
+
 * 避免无意义的转义符 `\`。
 
     > 转义符会降低可读性，应该仅在必要时才存在。
@@ -592,6 +597,138 @@ TODO
 
     // 好 - 仅 this 前后的引号才需要转义
     const foo = '\'this\' is "quoted"';
+    ```
+
+### 函数
+
+* 不要在非函数代码块（`if`、`while` 等）的内部定义函数。
+
+    ```js
+    // 不好
+    if (true) {
+        function test() {
+            console.log(111);
+        }
+        // ...
+    }
+
+    // 好
+    let test;
+    if (true) {
+        test = () => {
+            console.log(111);
+        };
+        // ...
+    }
+    ```
+
+* 将自执行函数用括号包起来。
+
+    ```js
+    // 不好
+    var x = function() {
+        console.log(1); 
+    }();
+
+    // 不好
+    (function() {
+        console.log(1); 
+    })();
+
+    // 好
+    (function() {
+        console.log(1); 
+    }());
+    ```
+
+* 不要将参数命名为 `arguments`，这将覆盖掉传入函数作用域的 `arguments` 对象。
+
+    ```js
+    // 不好
+    function foo(arguments) {
+        // ...
+    }
+
+    // 好
+    function foo(args) {
+        // ...
+    }
+    ```
+
+* 不要使用 `arguments` 对象，可以用 [剩余参数](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Rest_parameters) 替代。
+
+    > 剩余参数明确表示函数会接收一系列参数，在参数列表中就能看到，不像 `arguments` 那样隐晦；另外，剩余参数是标准数组，而 `arguments` 是类数组对象，要使用数组的方法还要先转为数组。
+
+    ```js
+    // 不好
+    function joinAll() {
+        const args = Array.from(arguments);
+        return args.join('');
+    }
+
+    // 好
+    function joinAll(...args) {
+        return args.join('');
+    }
+    ```
+
+* 使用 [默认参数](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Default_parameters) 语法而不是在函数内部处理默认值。
+
+    ```js
+    // 不好
+    function handleThings(opts) {
+        // 如果 opts 传值为 false，这里就会错误的重新指定默认值
+        opts = opts || {};
+        // ...
+    }
+
+    // 不好
+    function handleThings(opts) {
+        if (typeof opts === 'undefined') {
+            opts = {};
+        }
+        // ...
+    }
+
+    // 好
+    function handleThings(opts = {}) {
+        // ...
+    }
+    ```
+
+* 将默认参数放置于最后。
+
+    ```js
+    // 不好
+    function handleThings(opts = {}, name) {
+        // ...
+    }
+
+    // 好
+    function handleThings(name, opts = {}) {
+        // ...
+    }
+    ```
+
+* 不要使用 `Function` 构造函数生成一个函数。
+
+    > 用这种方式生成函数来计算字符串类似于 `eval`，可能造成很多漏洞。
+
+    ```js
+    // 不好
+    var add = new Function('a', 'b', 'return a + b');
+    ```
+
+* 使用 [扩展运算符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_operator) `...` 给函数传参。
+
+    ```js
+    // 不好
+    const x = [1, 2, 3, 4, 5];
+    console.log.apply(console, x);
+
+    // 好
+    const x = [1, 2, 3, 4, 5];
+    console.log(...x);
     ```
 
 ### 命名
