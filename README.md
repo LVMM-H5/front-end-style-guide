@@ -292,6 +292,44 @@
     const person = {·name: 'Kathy'·};
     ```
 
+* 对象的键和冒号间不加空格，冒号和值间加空格。
+
+    ```js
+    // 不好
+    const foo = {
+        key1∙:∙value1,
+        key2:value2,
+        key3∙:value3
+    };
+
+    // 好
+    const foo = {
+        key1:∙value1,
+    };
+    ```
+
+* 逗号之前不加空格，逗号之后加空格。
+
+    ```js
+    // 不好
+    const foo = 1,bar = 2;
+    const arr = [1 ,2];
+    const obj = {"foo": "bar" , "baz": "qur"};
+    foo(a,b);
+    new Foo(a ,b);
+    function foo(a , b){}
+    a,b
+
+    // 好
+    const foo = 1, bar = 2;
+    const arr = [1, 2];
+    const obj = {"foo": "bar", "baz": "qur"};
+    foo(a, b);
+    new Foo(a, b);
+    function foo(a, b){}
+    a, b
+    ```
+
 ### 逗号
 
 * 不要将逗号放在前面。
