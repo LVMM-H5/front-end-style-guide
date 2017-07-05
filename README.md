@@ -30,6 +30,7 @@
     * [对象](#对象)
     * [数组](#数组)
     * [函数](#函数)
+    * [箭头函数](#箭头函数)
 * [HTML](#html)
 * [CSS](#css)
 * [性能相关](#性能相关)
@@ -467,7 +468,7 @@
 
 ### 字符串
 
-* 字符串使用单引号 `''`。
+* 字符串使用单引号 `''` 。
 
     ```js
     // 不好
@@ -813,6 +814,40 @@
     // 好
     const x = [1, 2, 3, 4, 5];
     console.log(...x);
+    ```
+
+### 箭头函数
+
+* 当你使用一个函数表达式（或者传递一个匿名函数）时，请使用 [箭头函数](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions)。
+
+    ```js
+    // 不好
+    [1, 2, 3].map(function (x) {
+        const y = x + 1;
+        return x * y;
+    });
+
+    // 好
+    [1, 2, 3].map(x => {
+        const y = x + 1;
+        return x * y;
+    });
+    ```
+
+* 避免可能让人混淆箭头函数符号 `=>` 和比较运算符 `>=`、`<=` 的代码。
+
+    ```js
+    // 不好
+    const itemHeight = item => item.height >= 256 ? item.largeSize : item.smallSize;
+
+    // 好
+    const itemHeight = item => (item.height >= 256 ? item.largeSize : item.smallSize);
+
+    // 好
+    const itemHeight = item => {
+        const { height, largeSize, smallSize } = item;
+        return height >= 256 ? largeSize : smallSize;
+    };
     ```
 
 ## HTML
