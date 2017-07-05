@@ -26,7 +26,7 @@ TODO
 
 ### 空格
 
-* 将 Tab 设置为4个空格。
+* 将 Tab 设置为 4 个空格。
 
     > 主流的编辑器一般都支持设定 Tab 对应的空格数，以 Visual Studio Code 为例，设置方式：点击文件 -> 首选项 -> 设置，搜索 "editor.tabSize"。
 
@@ -453,7 +453,7 @@ TODO
 
 * 不要直接使用 `Object.prototype` 上的方法，例如 `hasOwnProperty`，`isPrototypeOf` 等。
 
-    > 这些方法可能会被对象的属性覆盖，例如对象：`{hasOwnProperty: false}`，或者该对象的 `__proto__` 属性为 `null`，例如使用 `Object.create(null)` 创建的对象，就不存在这些方法了。
+    > 这些方法可能会被对象的自定义属性覆盖，例如对象：`{hasOwnProperty: false}`，或者当该对象的 `__proto__` 属性为 `null` 时，例如使用 `Object.create(null)` 创建的对象，就不存在这些方法。
 
     ```js
     // 不好
@@ -461,6 +461,69 @@ TODO
 
     // 好
     console.log(Object.prototype.hasOwnProperty.call(obj, key));
+    ```
+
+### 数组
+
+* 使用简洁语法创建数组。
+
+    ```js
+    // 不好
+    const items = new Array();
+
+    // 好
+    const items = [];
+    ```
+
+* 使用 [Array#push](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/push) 在数组末尾添加元素。
+
+    ```js
+    const someStack = [];
+
+    // 不好
+    someStack[someStack.length] = 'abc';
+
+    // 好
+    someStack.push('abc');
+    ```
+
+* 使用 [扩展运算符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_operator) `...` 来复制数组。
+
+    > 注意：这些示例写法都是浅拷贝，不是深拷贝。
+
+    ```js
+    const items = [1, 2, 3];
+
+    // 不好
+    const itemsCopy = [];
+    for (let i = 0; i < items.length; i++) {
+        itemsCopy[i] = items[i];
+    }
+
+    // 好
+    const itemsCopy = items.slice();
+
+    // 好
+    const itemsCopy = Array.from(items);
+
+    // 最佳
+    const itemsCopy = [...items];
+    ```
+
+* 使用 [Array.from](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/from) 将类数组对象（arguments、NodeList 等）转换为标准数组。
+
+    ```js
+    // 不好
+    const divs = Array.prototype.slice.call(document.querySelectorAll('div'));
+
+    // 好
+    const divs = Array.from(document.querySelectorAll('div'));
+
+    // 好
+    function something() {
+        var args = Array.from(arguments);
+        // ...
+    }
     ```
 
 ### 命名
@@ -478,7 +541,7 @@ TODO
         // ...
     }
     ```
-* 使用[小驼峰命名法](https://zh.wikipedia.org/wiki/%E9%A7%9D%E5%B3%B0%E5%BC%8F%E5%A4%A7%E5%B0%8F%E5%AF%AB)来命名对象和函数。
+* 使用 [小驼峰命名法](https://zh.wikipedia.org/wiki/%E9%A7%9D%E5%B3%B0%E5%BC%8F%E5%A4%A7%E5%B0%8F%E5%AF%AB) 来命名对象和函数。
 
     ```js
     // 不好
@@ -490,7 +553,7 @@ TODO
     function thisIsMyFunction() {}
     ```
 
-* 使用[Pascal命名法](https://zh.wikipedia.org/wiki/%E5%B8%95%E6%96%AF%E5%8D%A1%E5%91%BD%E5%90%8D%E6%B3%95)来命名构造函数和类。
+* 使用 [Pascal命名法](https://zh.wikipedia.org/wiki/%E5%B8%95%E6%96%AF%E5%8D%A1%E5%91%BD%E5%90%8D%E6%B3%95) 来命名构造函数和类。
 
     ```js
     // 不好
