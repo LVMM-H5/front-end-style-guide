@@ -31,6 +31,7 @@
     * [数组](#数组)
     * [函数](#函数)
     * [箭头函数](#箭头函数)
+    * [类](#类)
 * [HTML](#html)
 * [CSS](#css)
 * [性能相关](#性能相关)
@@ -848,6 +849,142 @@
         const { height, largeSize, smallSize } = item;
         return height >= 256 ? largeSize : smallSize;
     };
+    ```
+
+### 类
+
+* 总是使用 `class`，避免直接操作 `prototype`。
+
+    > 这是因为 `class` 更简洁易懂。
+
+    ```js
+    // 不好
+    function Queue(contents = []) {
+        this.queue = [...contents];
+    }
+    Queue.prototype.pop = function () {
+        const value = this.queue[0];
+        this.queue.splice(0, 1);
+        return value;
+    };
+
+    // 好
+    class Queue {
+        constructor(contents = []) {
+            this.queue = [...contents];
+        }
+        pop() {
+            const value = this.queue[0];
+            this.queue.splice(0, 1);
+            return value;
+        }
+    }
+    ```
+
+* 使用 `extends` 实现继承。
+
+    ```js
+    class Parent {
+        constructor(name) {
+            this.name = name;
+        }
+        
+        print() {
+            console.log(this.name);
+        }
+    }
+    
+    // 不好
+    function Child(name) {
+        this.name = name;
+    }
+
+    Child.prototype = Object.create(Parent.prototype);
+
+    // 好
+    class Child extends Parent {}
+    ```
+
+* 如果类的方法没有显式返回值，建议返回 `this` 。
+
+    > 这样可以帮助构建方法链，实现链式调用。
+
+    ```js
+    // 好
+    class Div {
+        setHeight(height) {
+            this.height = height;
+        }
+
+        setWidth(width) {
+            this.width = width;
+        }
+    }
+
+    var div = new Div();
+    div.setHeigth(200);  // 返回 undefined
+    div.setWidth(300);  // 返回 undefined
+
+    // 最佳
+    class Div {
+        setHeight(height) {
+            this.height = height;
+            return this;
+        }
+
+        setWidth(width) {
+            this.width = width;
+            return this;
+        }
+    }
+
+    var div = new Div();
+    div.setHeight(200).setWidth(300);
+    ```
+
+* 如果没有给类显式指定构造函数，那它会有一个预设的默认构造函数。一个空的或者仅仅委派给父类的构造函数是不必要的。
+
+    ```js
+    // 不好
+    class Jedi {
+        constructor() {}
+
+        getName() {
+            return this.name;
+        }
+    }
+
+    // 不好
+    class Rey extends Jedi {
+        constructor(...args) {
+            super(...args);
+        }
+    }
+
+    // 好
+    class Rey extends Jedi {
+        constructor(...args) {
+            super(...args);
+            this.name = 'Rey';
+        }
+    }
+    ```
+
+* 避免定义重复的类成员。
+
+    > 类的重复成员会默认最后一个为有效，重复成员多数情况下都是 bug。
+
+    ```js
+    // 不好
+    class Foo {
+        bar() { return 1; }
+        bar() { return 2; }
+    }
+
+    // 好
+    class Foo {
+        bar() { return 2; }
+    }
     ```
 
 ## HTML
