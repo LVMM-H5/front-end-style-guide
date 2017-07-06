@@ -1025,6 +1025,43 @@
     }
     ```
 
+### 模块
+
+* 不要在多个地方导入同一路径。
+
+    > 这会让代码难以维护。
+
+    ```js
+    // 不好
+    import foo from 'foo';
+    import { named1, named2 } from 'foo';
+
+    // 好
+    import foo, { named1, named2 } from 'foo';
+
+    // 好
+    import foo, {
+        named1,
+        named2,
+    } from 'foo';
+    ```
+
+* 将所有的 `import` 放置于顶部。
+
+    ```js
+    // 不好
+    import foo from 'foo';
+    foo.init();
+
+    import bar from 'bar';
+
+    // 好
+    import foo from 'foo';
+    import bar from 'bar';
+
+    foo.init();
+    ```
+
 ## HTML
 
 ## CSS
