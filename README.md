@@ -33,6 +33,7 @@
     * [箭头函数](#箭头函数)
     * [类](#类)
     * [模块](#模块)
+    * [迭代器](#迭代器)
 * [HTML](#html)
 * [CSS](#css)
 * [性能相关](#性能相关)
@@ -1061,6 +1062,46 @@
     import bar from 'bar';
 
     foo.init();
+    ```
+
+### 迭代器
+
+* 避免使用迭代器，尽量用 JavaScript 的高阶函数来替代类似 `for-in`、`for-of` 这样的循环。
+
+    > 使用 [forEach](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/foreach)、[some](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/some)、[every](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/every)、[filter](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)、[map](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/map)、[reduce](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce)、[find](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/find)、[findIndex](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/findindex) 等处理一个数组；使用 [Object.keys](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/keys) 生成对象属性的数组。
+
+    ```js
+    const numbers = [1, 2, 3, 4, 5];
+
+    // 不好
+    let sum = 0;
+    for (let num of numbers) {
+        sum += num;
+    }
+
+    // 好
+    let sum = 0;
+    numbers.forEach(num => {
+        sum += num;
+    });
+
+    // 最佳
+    const sum = numbers.reduce((total, num) => total + num, 0);
+
+    // 不好
+    const increasedByOne = [];
+    for (let i = 0; i < numbers.length; i++) {
+        increasedByOne.push(numbers[i] + 1);
+    }
+
+    // 好
+    const increasedByOne = [];
+    numbers.forEach(num => {
+        increasedByOne.push(num + 1);
+    );
+
+    // 最佳
+    const increasedByOne = numbers.map(num => num + 1);
     ```
 
 ## HTML
