@@ -35,6 +35,7 @@
     * [模块](#模块)
     * [迭代器](#迭代器)
     * [运算符](#运算符)
+    * [类型转换](#类型转换)
     * [注释](#注释)
 * [HTML](#html)
 * [CSS](#css)
@@ -1261,6 +1262,61 @@
     const foo = a || b;
     const bar = !!c;
     const baz = !c;
+    ```
+
+### 类型转换
+
+* 转换为字符串。
+
+    > 
+
+    ```js
+    const num = 9;
+
+    // 不好
+    const score = num + '';
+    
+    // 不好 - num 不一定有 toString 方法，比如：num 为 null
+    const score = num.toString();
+
+    // 好
+    const score = String(num);
+    ```
+
+* 转换为数字。
+
+    ```js
+    const inputValue = '4';
+
+    // 不好
+    const val = new Number(inputValue);
+
+    // 不好
+    const val = +inputValue;
+
+    // 不好
+    const val = inputValue >> 0;
+
+    // 好
+    const val = parseInt(inputValue);
+
+    // 好
+    const val = Number(inputValue);
+    ```
+
+* 转换为布尔值。
+
+    ```js
+    const age = 0;
+
+    // 不好
+    const hasAge = new Boolean(age);
+
+    // 好
+    const hasAge = Boolean(age);
+
+    // 最佳
+    const hasAge = !!age;
     ```
 
 * 条件语句如 `if` 会自动进行类型转换，并遵循如下规则：
