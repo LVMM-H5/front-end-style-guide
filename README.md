@@ -34,6 +34,7 @@
     * [类](#类)
     * [模块](#模块)
     * [迭代器](#迭代器)
+    * [运算符](#运算符)
 * [HTML](#html)
 * [CSS](#css)
 * [性能相关](#性能相关)
@@ -1147,6 +1148,69 @@
     // 最佳
     const increasedByOne = numbers.map(num => num + 1);
     ```
+
+### 运算符
+
+* 使用 `===` 和 `!==` 进行比较运算。
+
+    ```js
+    // 不好
+    if (code == '1') {
+        // ...
+    }
+
+    // 好
+    if (code === '1') {
+        // ...
+    }
+    ```
+
+* 避免不必要的三元运算符。
+
+    ```js
+    // 不好
+    const foo = a ? a : b;
+    const bar = c ? true : false;
+    const baz = c ? false : true;
+
+    // 好
+    const foo = a || b;
+    const bar = !!c;
+    const baz = !c;
+    ```
+
+* 条件语句如 `if` 会自动进行类型转换，并遵循如下规则：
+    * 字符串：空字符串转换为 `false`，否则为 `true`
+    * 数字：+0，-0，NaN 转换为 `false`，否则为 `true`
+    * 布尔值：返回原布尔值
+    * undefined：转换为 `false`
+    * null：转换为 `false`
+    * 对象：转换为 `true`
+
+    ```js
+    const obj = {};
+    const arr = [];
+
+    // 不好 - 对象、数组始终为 true
+    if (obj) {
+        // ...
+    }
+
+    if (arr) {
+        // ...
+    }
+
+    // 好
+    if (Object.keys(obj).length) {
+        // ...
+    }
+
+    if (arr.length) {
+        // ...
+    }
+    ```
+
+### 
 
 ## HTML
 
