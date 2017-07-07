@@ -460,12 +460,12 @@
     
     ```js
     // 不好
-    var a = 1;
-    var b = 2;
+    var num1 = 1;
+    var num2 = 2;
 
     // 好
-    const a = 1;
-    const b = 2;
+    const num1 = 1;
+    const num2 = 2;
     ```
 
 * 如果你需要为引用重新赋值，使用 `let` 而不是 `var`。
@@ -505,6 +505,50 @@
     }
     console.log(a); // 引用错误：a未定义
     console.log(b); // 引用错误：b未定义
+    ```
+
+* 任何情况下，声明一个变量都不要省略关键字。
+
+    ```js
+    // 不好
+    cat = new Cat();
+
+    // 好
+    const cat = new Cat();
+
+    // 好
+    window.cat = new Cat();
+    ```
+
+* 不要使用链式声明和赋值。
+
+    > 链式声明会创建隐式全局变量，可能引入 bug。
+
+    ```js
+    // 不好
+    (function example() {
+        /**
+        * JavaScript 会将这行代码解析为：
+        * let a = ( b = ( c = 1 ) );
+        * let 关键字仅作用于变量 a，变量 b 和 c 将定义于全局作用域。
+        */
+        let a = b = c = 1;
+    }());
+
+    console.log(a); // 出错：a 未定义
+    console.log(b); // 1
+    console.log(c); // 1
+
+    // 好
+    (function example() {
+        let a = 1;
+        let b = a;
+        let c = a;
+    }());
+
+    console.log(a); // 出错：a 未定义
+    console.log(b); // 出错：b 未定义
+    console.log(c); // 出错：c 未定义
     ```
 
 ### 字符串
