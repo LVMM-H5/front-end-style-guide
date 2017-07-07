@@ -35,6 +35,7 @@
     * [模块](#模块)
     * [迭代器](#迭代器)
     * [运算符](#运算符)
+    * [注释](#注释)
 * [HTML](#html)
 * [CSS](#css)
 * [性能相关](#性能相关)
@@ -362,6 +363,42 @@
     a, b
     ```
 
+* 在注释内容之前加 1 个空格。
+
+    ```js
+    // 不好
+    //这里控制是否有效
+    const active = true;
+
+    // 好
+    // 这里控制是否有效
+    const active = true;
+
+    // 不好
+    /**
+    *make() 返回一个新的元素
+    *基于传进来的标签名称
+    */
+    function make(tag) {
+
+        // ...
+
+        return element;
+    }
+
+    // 好
+    /**
+    * make() 返回一个新的元素
+    * 基于传进来的标签名称
+    */
+    function make(tag) {
+
+        // ...
+
+        return element;
+    }
+    ```
+
 ### 逗号
 
 * 不要将逗号放在前面。
@@ -531,8 +568,12 @@
         let a = 1;
         const b = 1;
     }
-    console.log(a); // 引用错误：a未定义
-    console.log(b); // 引用错误：b未定义
+
+    // 引用错误：a未定义
+    console.log(a); 
+
+    // 引用错误：b未定义
+    console.log(b); 
     ```
 
 * 变量声明不要省略关键字。
@@ -563,9 +604,14 @@
         let a = b = c = 1;
     }());
 
-    console.log(a); // 出错：a 未定义
-    console.log(b); // 1
-    console.log(c); // 1
+    // 出错：a 未定义
+    console.log(a); 
+
+    // 输出 1
+    console.log(b);
+
+    // 输出 1
+    console.log(c); 
 
     // 好
     (function example() {
@@ -574,9 +620,14 @@
         let c = a;
     }());
 
-    console.log(a); // 出错：a 未定义
-    console.log(b); // 出错：b 未定义
-    console.log(c); // 出错：c 未定义
+    // 出错：a 未定义
+    console.log(a); 
+
+    // 出错：b 未定义
+    console.log(b); 
+
+    // 出错：c 未定义
+    console.log(c); 
     ```
 
 ### 字符串
@@ -877,6 +928,7 @@
     function handleThings(opts) {
         // 如果 opts 传值为 false，这里就会错误的重新指定默认值
         opts = opts || {};
+
         // ...
     }
 
@@ -885,6 +937,7 @@
         if (typeof opts === 'undefined') {
             opts = {};
         }
+
         // ...
     }
 
@@ -1034,8 +1087,12 @@
     }
 
     var div = new Div();
-    div.setHeigth(200);  // 返回 undefined
-    div.setWidth(300);  // 返回 undefined
+
+    // 返回 undefined
+    div.setHeigth(200);  
+
+    // 返回 undefined
+    div.setWidth(300);  
 
     // 最佳
     class Div {
@@ -1237,7 +1294,125 @@
     }
     ```
 
-### 
+### 注释
+
+* 对于类、方法、复杂的代码逻辑、从名称上难以理解的变量、正则表达式等，尽可能加上注释，以便于后期维护。
+
+    ```js
+    // 是否是由 tab 切换引起的页面滚动
+    let isScrollingByTab = false;
+
+    /**
+     * 获取对象的指定属性
+     * 属性可以是一个用点号连接的多层级路径
+     * @param {object} object 对象
+     * @param {string} path 属性值，可以是路径，如：'a.b.c[0].d'
+     * @param {any} [defaultVal=''] 取不到属性时的默认值
+     * @returns {any} 获取到的属性值
+     */
+    function getPathValue(object, path, defaultVal = '') {
+        // ...
+    }
+    ```
+
+* 单行注释使用 `//`，总是在需要注释的内容的上方加入注释，并在注释之前保留一个空行，除非该注释是在当前代码块的第一行。
+
+    ```js
+    // 不好
+    const active = true;  // 当前 tab 状态
+
+    // 好
+    // 当前 tab 状态
+    const active = true;
+
+    // 不好
+    function getType() {
+        console.log('获取type...');
+        // 设置默认 type 为 'no type'
+        const type = this.type || 'no type';
+
+        return type;
+    }
+
+    // 好
+    function getType() {
+        console.log('获取type...');
+
+        // 设置默认 type 为 'no type'
+        const type = this.type || 'no type';
+
+        return type;
+    }
+
+    // 好
+    function getType() {
+        // 设置默认 type 为 'no type'
+        const type = this.type || 'no type';
+
+        return type;
+    }
+    ```
+
+* 多行注释使用 `/** ... */`，并尽可能遵循 [jsdoc](http://www.css88.com/doc/jsdoc/) 注释规范。
+
+    > 遵循 jsdoc 规范的注释，能够很方便的自动生成 api 文档；同时，也能提升编码体验，以 Visual Studio Code 为例，当你调用函数时，会浮动提示该函数的描述、参数类型、返回值等信息。
+
+    ```js
+    // 不好
+    // 获取对象的指定属性
+    // 属性可以是一个用点号连接的多层级路径
+    function getPathValue(object, path, defaultVal = '') {
+        // ...
+    }
+
+    // 好
+    /**
+    * 获取对象的指定属性
+    * 属性可以是一个用点号连接的多层级路径
+    */
+    function getPathValue(object, path, defaultVal = '') {
+        // ...
+    }
+
+    // 最佳
+    /**
+     * 获取对象的指定属性
+     * 属性可以是一个用点号连接的多层级路径
+     * @param {object} object 对象
+     * @param {string} path 属性值，可以是路径，如：'a.b.c[0].d'
+     * @param {any} [defaultVal=''] 取不到属性时的默认值
+     * @returns {any} 获取到的属性值
+     */
+    function getPathValue(object, path, defaultVal = '') {
+        // ...
+    }
+    ```
+
+* 在注释内容之前加上 `FIXME: ` 可以提醒自己或其他开发人员这是一个需要修改的问题。
+
+    ```js
+    class Calculator extends Abacus {
+        constructor() {
+            super();
+
+            // FIXME: 不应该使用一个全局变量
+            total = 0;
+        }
+    }
+    ```
+
+* 在注释内容之前加上 `TODO: ` 可以提醒自己或其他开发人员这里需要一些额外工作。
+
+    ```js
+    class Calculator extends Abacus {
+        constructor() {
+            super();
+
+            // TODO: total 要写成可以被传入的参数修改
+            this.total = 0;
+        }
+    }
+    ```
 
 ## HTML
 
