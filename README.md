@@ -46,6 +46,11 @@
     * [标签](#标签)
     * [属性](#html-property)
 * [CSS](#css)
+    * [空格](#css-space)
+    * [引号](#css-quotes)
+    * [小数](#小数)
+    * [零值](#零值)
+    * [注释](#css-comments)
 * [性能相关](#性能相关)
 * [业务相关](#业务相关)
 
@@ -1773,6 +1778,276 @@
     ```
 
 ## CSS
+
+<a id="css-space" name="css-space"></a>
+### 空格
+
+* 使用 4 个空格作为缩进。
+
+    > 主流的编辑器一般都支持设定 Tab 对应的空格数，以 Visual Studio Code 为例，设置方式：点击文件 -> 首选项 -> 设置，搜索 "editor.tabSize"。
+
+    ```css
+    /* 不好 */
+    p {
+    ··color: #555;
+    }
+
+    /* 好 */
+    p {
+    ····color: #555;
+    }
+    ```
+
+* 在 `{` 前加 1 个空格。
+
+    ```css
+    /* 不好 */
+    p{
+        color: #555;
+    }
+
+    /* 不好 */
+    p
+    {
+        color: #555;
+    }
+
+    /* 好 */
+    p·{
+        color: #555;
+    }
+    ```
+
+* 将 `}` 放置于新行。
+
+    ```css
+    /* 不好 */
+    p {
+        color: #555;}
+
+    /* 好 */
+    p {
+        color: #555;
+    }
+    ```
+
+* 在属性值前加 1 个空格。
+
+    ```css
+    /* 不好 */
+    p {
+        color:#555;
+    }
+
+    /* 好 */
+    p {
+        color:·#555;
+    }
+    ```
+
+* 在属性值中的 `,` 后面加 1 个空格。
+
+    ```css
+    /* 不好 */
+    .element {
+        background-color: rgba(0,0,0,.5);
+    }
+
+    /* 好 */
+    .element {
+        background-color: rgba(0,·0,·0,·.5);
+    }
+    ```
+
+* 在注释的 `/*` 后和 `*/` 前各加 1 个空格。
+
+    ```css
+    /* 不好 */
+    /*这是一行注释*/
+    p {
+        color: #555;
+    }
+
+    /* 好 */
+    /*·这是一行注释·*/
+    p {
+        color: #555;
+    }
+    ```
+
+* 属性值中的 `(` 前不要加空格。
+
+    ```css
+    /* 不好 */
+    .element {
+        background-color: rgba·(0, 0, 0, .5);
+    }
+
+    /* 好 */
+    .element {
+        background-color: rgba(0, 0, 0, .5);
+    }
+    ```
+
+* 选择器 `>`、`+`、`~`、`:` 等前后都不要加空格。
+
+    ```css
+    /* 不好 */
+    div·>·p {
+        color: #555;
+    }
+
+    div·:·after {
+        content: "";
+    }
+
+    /* 好 */
+    div>p {
+        color: #555;
+    }
+
+    div:after {
+        content: "";
+    }
+    ```
+
+* 各规则之间保留一个空行。
+
+    ```css
+    /* 不好 */
+    p {
+        color: #555;
+    }
+    .element {
+        background-color: rgba(0, 0, 0, .5);
+    }
+
+    /* 好 */
+    p {
+        color: #555;
+    }
+
+    .element {
+        background-color: rgba(0, 0, 0, .5);
+    }
+
+    ```
+
+* 在规则声明中有多个选择器时，每个选择器独占一行。
+
+    ```css
+    /* 不好 */
+    div, p, span {
+        color: #555;
+    }
+
+    /* 好 */
+    div,
+    p,
+    span {
+        color: #555;
+    }
+    ```
+
+<a id="css-quotes" name="css-quotes"></a>
+### 引号
+
+* 字符串类型的值使用双引号。
+
+    ```css
+    /* 不好 */
+    .element:after {
+        content: '';
+        background-image: url(logo.png);
+    }
+
+    /* 好 */
+    .element:after {
+        content: "";
+        background-image: url("logo.png");
+    }
+    ```
+
+### 小数
+
+* 不要设置小数作为像素值。
+
+    > 像素值为小数时会被解析成整数，且各浏览器解析方式存在差异。
+
+    ```css
+    /* 不好 */
+    div {
+        width: 9.5px;
+    }
+
+    /* 好 */
+    div {
+        width: 10px;
+    }
+    ```
+
+* 去掉小数点前面的 0。
+
+    ```css
+    /* 不好 */
+    .element {
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    /* 好 */
+    .element {
+        color: rgba(0, 0, 0, .5);
+    }
+    ```
+
+### 零值
+
+* 属性值为 `0` 时，后面不要加单位。
+
+    ```css
+    /* 不好 */
+    .element {
+        width: 0px;
+    }
+
+    /* 好 */
+    .element {
+        width: 0;
+    }
+    ```
+
+* 定义无边框的样式时，将属性值设为 `0` 而不是 `none`。
+
+    ```css
+    /* 不好 */
+    div {
+        border: none;
+    }
+
+    /* 好 */
+    div {
+        border: 0;
+    }
+    ```
+
+<a id="css-comments" name="css-comments"></a>
+### 注释
+
+* 对于较生僻的样式、解决特定问题的样式、需要特别注明的样式等，尽可能加上注释，以便于后期维护。
+
+    ```css
+    button {
+        /* 移除iOS下的原生样式 */
+        -webkit-appearance: none;
+    }
+
+    .modal {
+        /* 蒙版的层级必须大于700，以放在列表之上；同时必须小于900，以放在导航之下 */
+        z-index: 701;
+    }
+    ```
+
+* 总是使用 `/* ... */` 创建标准注释，即便是在 sass 中也不要使用 `//` 。
 
 ## 性能相关
 
