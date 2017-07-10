@@ -1461,6 +1461,8 @@
 
 * 在注释内容之前加上 `TODO: ` 可以提醒自己或其他开发人员这里需要一些额外工作。
 
+    > 在 Visual Studio Code 中，可以安装 [TODO Highlight](https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight) 扩展，支持高亮显示 `FIXME:`、`TODO:` 等特殊注释，并自动生成列表展示。
+
     ```js
     class Calculator extends Abacus {
         constructor() {
