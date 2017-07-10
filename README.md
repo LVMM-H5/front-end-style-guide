@@ -191,7 +191,7 @@
     // 好
     if (true) {
         // ...
-    } else {
+    }∙else {
         // ...
     }
     ```
@@ -339,6 +339,8 @@
     // 好
     const foo = {
         key1:∙value1,
+        key2:∙value2,
+        key3:∙value3
     };
     ```
 
@@ -347,21 +349,21 @@
     ```js
     // 不好
     const foo = 1,bar = 2;
-    const arr = [1 ,2];
-    const obj = {"foo": "bar" , "baz": "qur"};
+    const arr = [1∙,2];
+    const obj = {"foo": "bar"∙,∙"baz": "qur"};
     foo(a,b);
-    new Foo(a ,b);
-    function foo(a , b){}
+    new Foo(a∙,b);
+    function foo(a∙,∙b){}
     a,b
 
     // 好
-    const foo = 1, bar = 2;
-    const arr = [1, 2];
-    const obj = {"foo": "bar", "baz": "qur"};
-    foo(a, b);
-    new Foo(a, b);
-    function foo(a, b){}
-    a, b
+    const foo = 1,∙bar = 2;
+    const arr = [1,∙2];
+    const obj = {"foo": "bar",∙"baz": "qur"};
+    foo(a,∙b);
+    new Foo(a,∙b);
+    function foo(a,∙b){}
+    a,∙b
     ```
 
 * 在注释内容之前加 1 个空格。
@@ -372,7 +374,7 @@
     const active = true;
 
     // 好
-    // 这里控制是否有效
+    //∙这里控制是否有效
     const active = true;
 
     // 不好
@@ -389,8 +391,8 @@
 
     // 好
     /**
-    * make() 返回一个新的元素
-    * 基于传进来的标签名称
+    *∙make() 返回一个新的元素
+    *∙基于传进来的标签名称
     */
     function make(tag) {
 
@@ -420,12 +422,12 @@
     ];
     ```
 
-* 多行情况下，最后一行的参数或属性的末尾添加额外逗号。
+* 多行情况下，建议在最后一行的参数或属性的末尾添加一个额外逗号。
 
-    > 这会让 git 的差异列表更清晰。
+    > 这会方便你新增或删除项，并让 git 的差异列表更清晰。
 
     ```diff
-    // 不好 - git 差异列表会展示 3 行改动
+    // 不好 - 事实上只新增了一个属性，但 git 差异列表会显示有 3 行改动
     const hero = {
          firstName: 'Florence',
     -    lastName: 'Nightingale'
@@ -599,7 +601,7 @@
     (function example() {
         /**
         * JavaScript 会将这行代码解析为：
-        * let a = ( b = ( c = 1 ) );
+        * let a = (b = (c = 1));
         * let 关键字仅作用于变量 a，变量 b 和 c 将定义于全局作用域。
         */
         let a = b = c = 1;
@@ -648,7 +650,7 @@
 
 * 对于长字符串不要人为分割。
 
-    > 多数规范都不允许字符串过长，推荐进行字符串拼接分割，但事实上，长字符串分割之后将难以维护，并可能导致关键字搜索无效；而长字符串难以阅读的问题，使用现代编辑器就可以解决，以 Visual Studio Code 为例：点击查看 -> 切换自动换行。
+    > 很多规范都不允许字符串过长，推荐进行字符串拼接分割，但事实上，长字符串分割之后将难以维护，并可能导致关键字搜索无效（关键字被分割了）；而长字符串难以阅读的问题，使用现代编辑器就可以解决，以 Visual Studio Code 为例：点击查看 -> 切换自动换行。
 
     ```js
     // 不好
