@@ -1159,6 +1159,54 @@
     }
     ```
 
+### 属性
+
+* 使用 `.` 号访问属性，仅对无效的属性名才使用方括号。
+
+    ```js
+    const person = {
+        age: 20,
+        'first-name': 'Ada'
+    }
+
+    // 不好
+    const age = person['age'];
+
+    // 好
+    const age = person.age;
+    const firstName = person['first-name'];
+    ```
+
+* 访问多层级属性时，每层属性都需要判断是否存在。
+
+    ```js
+    const data = {
+        code: 1,
+        data: {
+            list: [{
+                productId: '001'
+            }]
+        }
+    }
+
+    // 不好 - 当 list 是一个空数组时就会报错
+    const productId = data.data.list[0].productId;
+
+    // 不好 - 过多的 try catch 会影响性能
+    try {
+        const productId = data.data.list[0].productId;
+    } catch (e) {
+        const productId = '未命名';
+        console.error('获取属性 productId 时出错！');
+    }
+
+    // 好 - 确保不会出现异常，任意一次的判断结果为 false 则 productId = undefined
+    const productId = data && data.data && data.data.list && data.data.list[0] && data.data.list[0].productId;
+
+    // 最佳 - 采用我们获取属性值的公共方法
+    const productId = commonUtil.getPathValue(data, 'data.list[0].productId', '未命名');
+    ```
+
 ### 模块
 
 * 不要在多个地方导入同一路径。
@@ -1234,6 +1282,87 @@
 
     // 最佳
     const increasedByOne = numbers.map(num => num + 1);
+    ```
+
+### 条件语句
+
+* 根据实际情况，恰当选用 `if` 或 `switch case` 来构建条件语句。
+
+  一般来说，下面几种情况更适合使用 `switch`：
+
+    * 枚举表达式的值。这种枚举是可以期望的、平行逻辑关系的。
+
+    * 表达式的值是固定的，不是动态变化的。
+
+    * 表达式的值是有限的，而不是无限的。
+
+    * 表达式的值一般为整数、字符串等类型的数据。
+
+    而 `if` 结构更适合这些情况：
+
+    * 具有复杂的逻辑关系。
+
+    * 表达式的值具有线性特征，如对连续的区间值进行判断。
+
+    * 表达式的值是动态的。
+
+    * 测试任意类型的数据。
+
+    ```js
+    // 好
+    let msg;
+    if (score < 60) {
+        msg = '不及格';
+	} else if (score >= 60 && score < 75) {
+        msg = '合格';
+	} else if (score >= 75 && score < 90) {
+        msg = '良好';
+	} else {
+        msg = '优秀';
+	}
+
+    // 好
+    let msg;
+    switch (sex) {
+        case '女':
+            msg = '女士';
+            break;
+        case '男':
+            msg = '先生';
+            break;
+        default:
+            msg = '请选择性别';
+    }
+    ```
+
+* 所有的 `switch` 语句都要包含 `default` 情况，即使 `default` 内容为空。
+
+    > 总是明确说明默认情况是什么，可以提醒开发人员是否忘记了去处理默认情况，让逻辑更严谨。
+
+    ```js
+    // 不好
+    switch (code) {
+        case '1':
+            // ...
+            break;
+    }
+
+    // 好
+    switch (code) {
+        case '1':
+            // ...
+            break;
+        default:
+            // ...
+    }
+
+    // 好 - 默认情况就是什么都不做
+    switch (code) {
+        case '1':
+            // ...
+            break;
+        default:
+    }
     ```
 
 ### 运算符
