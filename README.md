@@ -40,6 +40,11 @@
     * [类型转换](#类型转换)
     * [注释](#注释)
 * [HTML](#html)
+    * [命名](#html-name)
+    * [空格](#html-space)
+    * [引号](#html-quotes)
+    * [标签](#标签)
+    * [属性](#html-property)
 * [CSS](#css)
 * [性能相关](#性能相关)
 * [业务相关](#业务相关)
@@ -119,7 +124,7 @@
 
 ### 空格
 
-* 将 Tab 设置为 4 个空格。
+* 使用 4 个空格作为缩进。
 
     > 主流的编辑器一般都支持设定 Tab 对应的空格数，以 Visual Studio Code 为例，设置方式：点击文件 -> 首选项 -> 设置，搜索 "editor.tabSize"。
 
@@ -1606,6 +1611,166 @@
     ```
 
 ## HTML
+
+<a id="html-name" name="html-name"></a>
+### 命名
+
+* 标签名全部小写。
+
+    ```html
+    <!--不好-->
+    <DIV>这是一个块级元素</DIV>
+
+    <!--好-->
+    <div>这是一个块级元素</div>
+    ```
+
+* 属性名全部小写，使用 `-` 作为分隔符。
+
+    ```html
+    <!--不好-->
+    <div Class="contain" itemCode="1"></div>
+
+    <!--好-->
+    <div class="contain" item-code="1"></div>
+    ```
+
+<a id="html-space" name="html-space"></a>
+### 空格
+
+* 使用 4 个空格作为缩进。
+
+    > 主流的编辑器一般都支持设定 Tab 对应的空格数，以 Visual Studio Code 为例，设置方式：点击文件 -> 首选项 -> 设置，搜索 "editor.tabSize"。
+
+    ```html
+    <!--不好-->
+    <div>
+    ··<span>这是一行文本</span>
+    </div>
+
+    <!--好-->
+    <div>
+    ····<span>这是一行文本</span>
+    </div>
+    ```
+
+* 不要混用 Tab 和空格。
+
+    > 这可能会导致一些格式上的异常，例如：在 Jade 中混用 Tab 和空格就会出错。
+
+* 标签内的文本避免使用空格，应该使用样式来实现。
+
+    ```html
+    <!--不好-->
+    <p>
+        &nbsp;&nbsp;这是一些文本
+    </p>
+
+    <!--好-->
+    <p style="text-indent: 2em;">
+        这是一些文本
+    </p>
+
+    <!--不好-->
+    <div>￥&nbsp;1000</div>
+
+    <!--好-->
+    <div>￥<span style="margin-left: 5px">1000</span></div>
+    ```
+
+<a id="html-quotes" name="html-quotes"></a>
+### 引号
+
+* 属性值的最外层使用双引号。
+
+    ```html
+    <!--不好-->
+    <div class=container></div>
+
+    <!--不好-->
+    <div class='container'></div>
+
+    <!--好-->
+    <div class="container"></div>
+    ```
+
+### 标签
+
+* 不要在自闭合标签的结尾使用 `/` 。
+
+    ```html
+    <!--不好-->
+    <img src="logo.png" alt="company"/>
+    <br/>
+
+    <!--好-->
+    <img src="logo.png" alt="company">
+    <br>
+    ```
+
+* 不要省略可选的关闭标签。
+
+    > [HTML5规范](https://www.w3.org/TR/REC-html40/index/elements.html) 指出一些标签可以省略关闭标签，但我们认为这样做降低了可读性。
+
+    ```html
+    <!--不好-->
+    <body>
+        <ul>
+            <li>111
+            <li>222
+            <li>333
+        </ul>
+
+    <!--好-->
+    <body>
+        <ul>
+            <li>111</li>
+            <li>222</li>
+            <li>333</li>
+        </ul>
+    </body>
+    ```
+
+<a id="html-property" name="html-property"></a>
+### 属性
+
+* 引入 css 和 js 时不需要指明 `type` 属性。
+
+    > `text/css` 和 `text/javascript` 分别是它们的默认值。
+
+    ```html
+    <!--不好-->
+    <link type="text/css" rel="stylesheet" href="global.css">
+    <script type="text/javascript" src="public.js"></script>
+
+    <!--好-->
+    <link rel="stylesheet" href="global.css">
+    <script src="public.js"></script>
+    ```
+
+* 布尔属性不需要指明属性的值。
+
+    > 布尔属性存在代表取值为 true，属性不存在代表取值为 false。
+
+    ```html
+    <!--不好-->
+    <input type="text" disabled="disabled">
+    <input type="checkbox" value="1" checked="checked">
+
+    <!--好-->
+    <input type="text" disabled>
+    <input type="checkbox" value="1" checked>
+    ```
+
+* 尽量将 `class`、`id` 等使用频率高的属性放在前面。
+
+    ```html
+    <!--不好-->
+    <input type="text" placeholder="请输入关键字" id="search-input" disabled class="form-control">
+
+    <!--好-->
+    <input class="form-control" id="search-input" type="text" placeholder="请输入关键字" disabled>
+    ```
 
 ## CSS
 
