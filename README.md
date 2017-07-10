@@ -45,6 +45,7 @@
     * [引号](#html-quotes)
     * [标签](#标签)
     * [属性](#html-property)
+    * [注释](#html-comments)
 * [CSS](#css)
     * [空格](#css-space)
     * [引号](#css-quotes)
@@ -1775,6 +1776,23 @@
 
     <!--好-->
     <input class="form-control" id="search-input" type="text" placeholder="请输入关键字" disabled>
+    ```
+
+<a id="html-comments" name="html-comments"></a>
+### 注释
+
+* 对于重要的元素，尽可能加上注释，以便于后期维护。
+
+    ```html
+    <!--筛选面板上方的加载中动画，主要用于：1. 点击筛选项，2. 点击清空筛选 时显示-->
+    <div id="loading2" style="display:none;">
+        <div></div>
+    </div>
+
+    <!--筛选面板上方的提示语，主要用于无筛选数据时显示-->
+    <div id="filterTip" style="display:none;">
+        <span>该筛选项无数据，已恢复至默认选项！</span>
+    </div>
     ```
 
 ## CSS
