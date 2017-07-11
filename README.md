@@ -53,7 +53,17 @@
     * [零值](#零值)
     * [注释](#css-comments)
 * [性能相关](#性能相关)
-* [业务相关](#业务相关)
+* [页面相关](#页面相关)
+    * [整体结构](#整体结构) 
+    * [SEO](#seo)
+    * [头部](#头部)
+    * [定位](#定位)
+    * [统计](#统计)
+    * [loading](#loading)
+    * [图片](#图片)
+    * [分享](#分享)
+    * [错误处理](#错误处理)
+    * [其他](#其他)
 
 ## JavaScript
 
@@ -1326,13 +1336,13 @@
     let msg;
     if (score < 60) {
         msg = '不及格';
-	} else if (score >= 60 && score < 75) {
+    } else if (score >= 60 && score < 75) {
         msg = '合格';
-	} else if (score >= 75 && score < 90) {
+    } else if (score >= 75 && score < 90) {
         msg = '良好';
-	} else {
+    } else {
         msg = '优秀';
-	}
+    }
 
     // 好
     let msg;
@@ -2069,4 +2079,158 @@
 
 ## 性能相关
 
-## 业务相关
+## 页面相关
+
+### 整体结构
+
+* 页面html模板如下
+```html
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" name="viewport">
+        <meta http-equiv="Cache-Control" content="no-transform" />
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="expires" content="0">
+        <meta name="format-detection" content="telephone=no"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="applicable-device" content="mobile">
+        <link rel="apple-touch-icon" href=" //pics.lvjs.com.cn/img/mobile/touch/img/lvmama_v1_png.png">
+        <link rel="apple-touch-icon" sizes="72x72" href=" //pics.lvjs.com.cn/img/mobile/touch/img/lvmama_v1_png.png ">
+        <link rel="apple-touch-icon" sizes="114x114" href=" //pics.lvjs.com.cn/img/mobile/touch/img/lvmama_v1_png.png ">
+        <link rel="apple-touch-icon" sizes="144x144" href=" //pics.lvjs.com.cn/img/mobile/touch/img/lvmama_v1_png.png ">
+        <link rel="stylesheet" type="text/css" href="//pics.lvjs.com.cn/mobile/lib/css/common.css"/>
+        <link rel="stylesheet" type="text/css" href="业务css地址"/>
+        <title>驴妈妈无线官网-景区门票_自助游_旅游度假_酒店预订</title>
+        <meta name="Keywords" content="驴妈妈无线,景区门票,旅游度假"/>
+        <meta name="Description" content="驴妈妈无线官网:支持手机快捷预订景区门票,自助游线路,全国酒店,豪华邮轮等各种旅游产品.(中国最领先的在线旅游预订服务商!) "/>
+    </head>
+    <body>
+        <!-- 正文 code here -->
+        <script type="text/javascript" src="//pics.lvjs.com.cn/mobile/lib/plugins/public/1.0/public.min.js"></script>
+        <script type="text/javascript" src="插件或业务js地址"></script>
+    </body>
+</html>
+```
+> TDK：专题找运营产品提供，其他找陈程或对应产品提供，如不提供写如上默认TDK；
+
+
+* CSS：css在head部分引用，业务css前需引用全局css(common.css)；  
+* JS ：js在body闭合标签前引用，插件、业务js前需引用全局js(public.min.js)； 
+* 资源文件css、js、image需**压缩**且使用**pics.lvjs.com.cn**域名引用，如：`//pics.lvjs.com.cn/mobile/node_pro/public/min/js/mHomePage/proList.js`
+
+### SEO
+> 页面开发前，先和产品确认有无SEO需求，若有则需后端渲染，并遵循以下规则。  
+
+* 首屏必须后端渲染，不能使用ajax；
+* 能使用异步js的使用异步,如：`<script async src="js地址"></script>`；
+* html及其他资源文件中删除不必要的注释；
+* 页面的产品标题用h1标签，副标题用h2、h3标签；
+* 图片使用img标签，并使用alt属性，避免使用background，如：`<img src="图片地址" alt="上海欢乐谷">`；
+* 链接不用javascript控制，用标准的超链接，如：`<a href="链接地址" class="样式">链接文字</a>`；
+* 提测后，即让产品通知SEO验收，并跟进SEO验收情况，及时修复问题；
+
+
+### 头部
+* 如无特殊要求，业务类页面头部使用lvheader插件，专题使用ztheader插件。
+
+### 定位
+* 城市数据的获取和赋值统一使用前后端的定位选择插件positionUtil（location），实现整站城市的数据流转（特殊城市列表除外）。
+
+### 统计
+* 业务类布码，在调用统计方法之前引入`statisticsUtil-x.x.min.js`；
+* 专题类布码，在页面底部引入`mlosc.js`。
+
+
+### 多页加载
+* 对于超过两屏的页面，需在页面底部异步引用toTop插件；
+* 加载下一页数据时，需使用toTop插件中相应的类名展示不同的状态（lvLoading-over、lvLoading-hide）；
+* 列表子元素需新增lvAddBgcolor类名，点击时会有统一底色（需引用toTop插件）。
+    
+### loading
+* 主接口请求中： 
+页面主接口请求开始到返回前，显示小驴转转转加载动画；  
+页面部分模块数据请求中，对应位置显示“三个红点”加载动画；  
+*使用方法：调用接口时，传`lvLoading:{type:1;text:'加载中...'}`键值，即可自定义可使用不同加载效果*。
+
+* tab切换接口请求中：  
+当点击tab后，对应列表数据未返回时，应设置一定的高度，防止页面上滑，并显示“三个红点”加载动画，使用方法同上。
+
+### 图片
+
+* 图片样式自适应
+    * img：width百分比，height自适应；
+    * div：background + padding-bottom 。
+
+
+
+* 有超过一屏的图片展示，需使用lazyload插件，实现懒加载；
+
+
+* 产品图片背景
+    * 背景统一为灰色小驴，居中显示（使用common.css相应类名）；
+    * 图片元素的外层需嵌套一个盒子。
+```html
+    <div class="img-wrap">
+       <img src="http://pic.lvmama.com/pics//uploads/pc/place2/2017-06-23/294d8e11-7cb7-4e46-a8e5-96c237775de9_480_320.jpg">
+       <div class="price"><p>¥<i>170</i>起</p></div>  
+    </div>
+```
+
+
+* 产品图片尺寸后缀
+    * java接口返回的图片路径无尺寸后缀时（如`480_320`），建议对应接口开发添加尺寸后缀，如 `http://pic.lvmama.com/pics//uploads/pc/place2/2017-06-23/294d8e11-7cb7-4e46-a8e5-96c237775de9_480_320.jpg`；
+    *php接口对应的cms后台已对上传图片尺寸和大小做限制，故无需后缀*
+    * 100%宽度图片建议使用宽720以上后缀，50%使用480以上；30%使用300以上；25%使用200以上；
+    * 图库支持尺寸如下：
+`1200_480|720_540|480_320|360_270|300_200|200_150|200_80|180_120|121_91|1280_|960_|720_|480_|1080_432|530_353|347_231`；
+
+
+* 防止轮播图平铺  
+
+  > 在网速慢的情况下，swiper里面的图片会出现平铺显示的情况  
+
+  需在swiper外层盒子限制其高度（padding-bottom或“固定高度”）
+
+
+### 分享
+* app分享  
+内嵌app的页面如果想具有app的分享功能，必须具有share meta，  
+如：`<meta id="share" share-linkurl="https://zt1.lvmama.com/template4/index/2255" name="share" share-title="暑期热爱季【驴妈妈】" share-content="驴妈妈暑期热爱季，千万红包狂撒一夏！最高立减2000元！" share-imageurl="http://pics.lvjs.com.cn/pics/allin/back/201706/1498031694711.jpg">`
+
+* 微信(QQ)分享  
+  > 如果页面中存在share meta，且没有显式调用share自定义分享方法，share插件会默认使用share meta中的内容作为微信分享的内容。
+
+  * 业务类页面使用share插件，专题类页面使用newBase(本质还是调用了share插件)，可自定义微信(QQ)分享图片、标题、描述等；
+  * 分享图片，300*300以上图片（如不自定义设置，微信会默认取页面中第一张大于300\*300的图片）；
+  * 分享标题，字数限制待定（如不自定义设置，微信会默认取页面title内容）；
+  * 分享描述，不得超过25个中文字符（50个英文字符），若超过share插件将会进行截取（如不自定义设置，微信会默认取页面url进行显示）。
+
+
+
+### 错误处理
+* 主接口超时，待定；
+* 主接口500，待定；
+* 接口返回数据为空，小灰驴+产品定制化文字；
+* 接口-1，弹出错误信息黑框；
+* 接口-2，弹出错误信息黑框；  
+
+### 其他
+* 调用php的cms运营配置类接口，需使用cmsUtil插件，将运营配置信息转化为最终链接；
+* 频道、列表、详情类页面需在页面底部异步引用downloadBar下载条插件；
+
+
+
+
+
+
+
+
+
+
+
+
+
