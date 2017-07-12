@@ -1778,6 +1778,18 @@
     <input class="form-control" id="search-input" type="text" placeholder="请输入关键字" disabled>
     ```
 
+* 使用 `data-*` 创建标准化的自定义属性。
+
+    > 这是创建自定义属性的标准方式；加上 `data-` 前缀能够明确表示这是一个自定义属性，而非原生属性；另外，在 `JavaScript` 中还可以通过 `document.querySelector(selector).dataset` 方便的访问它们。
+
+    ```html
+    <!--不好-->
+    <div class="container" code="freetour"></div>
+
+    <!--好-->
+    <div class="container" data-code="freetour"></div>
+    ```
+
 <a id="html-comments" name="html-comments"></a>
 ### 注释
 
