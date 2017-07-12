@@ -356,14 +356,14 @@
     const foo = {
         key1∙:∙value1,
         key2:value2,
-        key3∙:value3
+        key3∙:value3,
     };
 
     // 好
     const foo = {
         key1:∙value1,
         key2:∙value2,
-        key3:∙value3
+        key3:∙value3,
     };
     ```
 
@@ -373,7 +373,7 @@
     // 不好
     const foo = 1,bar = 2;
     const arr = [1∙,2];
-    const obj = {"foo": "bar"∙,∙"baz": "qur"};
+    const obj = {'foo': 'bar'∙,∙'baz': 'qur'};
     foo(a,b);
     new Foo(a∙,b);
     function foo(a∙,∙b){}
@@ -382,7 +382,7 @@
     // 好
     const foo = 1,∙bar = 2;
     const arr = [1,∙2];
-    const obj = {"foo": "bar",∙"baz": "qur"};
+    const obj = {'foo': 'bar',∙'baz': 'qur'};
     foo(a,∙b);
     new Foo(a,∙b);
     function foo(a,∙b){}
