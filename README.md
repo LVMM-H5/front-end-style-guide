@@ -38,6 +38,7 @@
     * [条件语句](#条件语句)
     * [运算符](#运算符)
     * [类型转换](#类型转换)
+    * [调试](#调试)
     * [注释](#注释)
 * [HTML](#html)
     * [命名](#html-name)
@@ -84,13 +85,17 @@
     ```
 * 使用 [小驼峰命名法](https://zh.wikipedia.org/wiki/%E9%A7%9D%E5%B3%B0%E5%BC%8F%E5%A4%A7%E5%B0%8F%E5%AF%AB) 来命名基本类型、对象和函数。
 
+    > 即使是常量也不要使用全部大写，大写的名称难以阅读。在 ES5 中由于没有 `const` 关键字，将一个实际不会改变的变量命名为全部大写，有助于在视觉上与普通变量加以区分，并方便语法检测工具进行检查。而在 ES6 中，这是没有必要的。
+
     ```js
     // 不好
-    const this_is_my_object = {};
+    const TAXFORPRODUCT = 0.9;
+    let this_is_my_object = {};
     function c() {}
 
     // 好
-    const thisIsMyObject = {};
+    const taxForProduct = 0.9;
+    let thisIsMyObject = {};
     function thisIsMyFunction() {}
     ```
 
@@ -654,6 +659,19 @@
 
     // 出错：c 未定义
     console.log(c); 
+    ```
+
+* 不要使用 [魔术数字](https://zh.wikipedia.org/zh-cn/%E9%AD%94%E8%A1%93%E6%95%B8%E5%AD%97)，应该使用意义明确的常量代替。
+
+    > 这会使代码更加可读且易于重构。
+
+    ```js
+    // 不好
+    const finalPrice = originalPrice * 0.8;
+
+    // 好
+    const tax = 0.8;
+    const finalPrice = originalPrice * tax;
     ```
 
 ### 字符串
@@ -1503,6 +1521,28 @@
         // ...
     }
     ```
+
+### 调试
+
+* 不要使用 `debugger` 语句进行调试。
+
+    > 现代开发工具可以通过设置断点的方式进行调试，无须修改源码。
+
+    ```js
+    // 不好
+    function test(num) {
+        debugger;
+        return Boolean(num);
+    }
+
+    // 好
+    function test(num) {
+        // 在下面这行设置断点
+        return Boolean(num);
+    }
+    ```
+
+* 在部署到生产环境之前移除项目中的 `console`、`alert` 等调试代码。
 
 ### 注释
 
