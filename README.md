@@ -39,6 +39,7 @@
     * [运算符](#运算符)
     * [类型转换](#类型转换)
     * [调试](#调试)
+    * [日志](#日志)
     * [注释](#注释)
 * [HTML](#html)
     * [命名](#html-name)
@@ -1543,6 +1544,34 @@
     ```
 
 * 在部署到生产环境之前移除项目中的 `console`、`alert` 等调试代码。
+
+### 日志
+
+* 在必要的地方记录日志，方便问题排查。包括：
+    
+    * `try catch` 语句捕获到了异常
+    * ajax 调用接口成功
+    * ajax 调用接口失败
+    * 得到的结果与预期不符
+    * 其它需要记录日志的情况
+
+* 使用公共方法记录日志，日志的内容要尽可能详细。
+
+    ```js
+    // 不好
+    try {
+        const result = JSON.parse(data);
+    } catch(err) {
+        console.error(err);
+    }
+
+    // 好
+    try {
+        const result = JSON.parse(data);
+    } catch(err) {
+        logger.error(`接口返回结果转换为JSON时出错：${err}`);
+    }
+    ```
 
 ### 注释
 
