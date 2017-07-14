@@ -948,22 +948,6 @@
 
 ### 属性
 
-* 使用 `.` 号访问属性，仅对无效的属性名才使用方括号。
-
-    ```js
-    const person = {
-        age: 20,
-        'first-name': 'Ada'
-    }
-
-    // 不好
-    const age = person['age'];
-
-    // 好
-    const age = person.age;
-    const firstName = person['first-name'];
-    ```
-
 * 访问多层级属性时，每层属性都需要判断是否存在。
 
     ```js
@@ -992,6 +976,22 @@
 
     // 最佳 - 采用我们获取属性值的公共方法
     const productId = commonUtil.getPathValue(data, 'data.list[0].productId', '未命名');
+    ```
+    
+* 使用 `.` 号访问属性，仅对无效的属性名才使用方括号。
+
+    ```js
+    const person = {
+        age: 20,
+        'first-name': 'Ada'
+    }
+
+    // 不好
+    const age = person['age'];
+
+    // 好
+    const age = person.age;
+    const firstName = person['first-name'];
     ```
 
 ### 模块
@@ -1672,7 +1672,7 @@
         // ...
     };
     ```
-    
+
 ### 调试
 
 * 不要使用 `debugger` 语句进行调试。
