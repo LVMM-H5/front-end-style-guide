@@ -22,9 +22,8 @@
 
 * [JavaScript](#javascript)
     * [命名](#命名)
-    * [空格](#空格)
-    * [逗号](#逗号)
-    * [分号](#分号)
+    * [注释](#注释)
+    * [日志](#日志)
     * [变量](#变量)
     * [字符串](#字符串)
     * [对象](#对象)
@@ -38,9 +37,10 @@
     * [条件语句](#条件语句)
     * [运算符](#运算符)
     * [类型转换](#类型转换)
+    * [空格](#空格)
+    * [逗号](#逗号)
+    * [分号](#分号)
     * [调试](#调试)
-    * [日志](#日志)
-    * [注释](#注释)
 * [HTML](#html)
     * [命名](#html-name)
     * [空格](#html-space)
@@ -144,409 +144,154 @@
     ];
     ```
 
-### 空格
+### 注释
 
-* 使用 4 个空格作为缩进。
-
-    > 主流的编辑器一般都支持设定 Tab 对应的空格数，以 Visual Studio Code 为例，设置方式：点击文件 -> 首选项 -> 设置，搜索 "editor.tabSize"。
+* 对于类、方法、复杂的代码逻辑、从名称上难以理解的变量、正则表达式等，尽可能加上注释，以便于后期维护。
 
     ```js
-    // 不好
-    function foo() {
-    ∙let name;
-    }
+    // 是否是由 tab 切换引起的页面滚动
+    let isScrollingByTab = false;
 
-    // 不好
-    function bar() {
-    ∙∙let name;
-    }
-
-    // 好
-    function foo() {
-    ∙∙∙∙let name;
-    }
-    ```
-
-* 不要混用 Tab 和空格。
-
-    > 这可能会导致一些格式上的异常，例如：在 Jade 中混用 Tab 和空格就会出错。
-
-* 在左大括号之前加 1 个空格。
-
-    ```js
-    // 不好
-    function test(){
-        console.log('test');
-    }
-
-    // 好
-    function test()∙{
-        console.log('test');
-    }
-    ```
-
-* 在流程控制语句（如 `if`, `while` 等）的左小括号之前加 1 个空格。
-
-    ```js
-    // 不好
-    if(true) {
-        done();
-    }
-
-    // 好
-    if∙(true) {
-        done();
-    }
-    ```
-
-* 将 `else` 放在与前面 `}` 同一行并加 1 个空格。
-
-    ```js
-    // 不好
-    if (true) {
-        // ...
-    }else {
-        // ...
-    }
-
-    // 不好
-    if (true) {
-        // ...
-    }
-    else {
-        // ...
-    }
-
-    // 好
-    if (true) {
-        // ...
-    }∙else {
-        // ...
-    }
-    ```
-
-* 在函数的定义和调用中，函数名与参数列表之间不要有空格。
-
-    ```js
-    // 不好
-    function test∙() {
-        console.log∙('test');
-    }
-
-    // 好
-    function test() {
-        console.log('test');
-    }
-    ```
-* 运算符之间使用空格隔开。
-
-    ```js
-    // 不好
-    const x=y+5;
-
-    // 好
-    const x∙=∙y∙+∙5;
-    ```
-
-* 在文件的末尾加上一行空白行。
-
-    ```js
-    // 不好
-    import { es6 } from './test';
-        // ...
-    export default es6;
-    ```
-
-    ```js
-    // 不好
-    import { es6 } from './test';
-        // ...
-    export default es6;↵
-    ↵
-    ```
-
-    ```js
-    // 好
-    import { es6 } from './test';
-        // ...
-    export default es6;↵
-    ```
-
-* 多个方法（大于 2 个）形成的方法链调用，从第 1 或第 2 个方法开始换行调用，并将 `.` 号置于行首以说明该行是方法调用，而不是开始一个新的语句。
-
-    ```js
-    // 好
-    const result1 = data.replace('[str1]', 'str1').replace('[str2]', 'str2');
-
-    // 不好
-    const result2 = data.replace('[str1]', 'str1').replace('[str2]', 'str2').replace('[str3]', 'str3');
-
-    // 好
-    const result3 = data
-        .replace('[str1]', 'str1')
-        .replace('[str2]', 'str2')
-        .replace('[str3]', 'str3');
-
-    // 好
-    const result4 = data.replace('[str1]', 'str1')
-        .replace('[str2]', 'str2')
-        .replace('[str3]', 'str3');
-    ```
-
-* 不要在语句块的开始和结尾处放置空行。
-
-    ```js
-    // 不好
-    function bar() {
-
-        console.log(foo);
-
-    }
-
-    // 好
-    function bar() {
-        console.log(foo);
-    }
-    ```
-
-* 不要在小括号内的两侧放置空格。
-
-    ```js
-    // 不好
-    function bar(·foo·) {
-        return foo;
-    }
-
-    // 好
-    function bar(foo) {
-        return foo;
-    }
-
-    // 不好
-    if (·foo·) {
-        console.log(foo);
-    }
-
-    // 好
-    if (foo) {
-        console.log(foo);
-    }
-    ```
-
-* 不要在中括号内的两侧放置空格。
-
-    ```js
-    // 不好
-    const foo = [·1, 2, 3·];
-    console.log(foo[·0·]);
-
-    // 好
-    const foo = [1, 2, 3];
-    console.log(foo[0]);
-    ```
-
-* 在大括号内的两侧放置空格。
-
-    ```js
-    // 不好
-    const person = {name: 'Kathy'};
-
-    // 好
-    const person = {·name: 'Kathy'·};
-    ```
-
-* 对象的键和冒号间不加空格，冒号和值间加空格。
-
-    ```js
-    // 不好
-    const foo = {
-        key1∙:∙value1,
-        key2:value2,
-        key3∙:value3,
-    };
-
-    // 好
-    const foo = {
-        key1:∙value1,
-        key2:∙value2,
-        key3:∙value3,
-    };
-    ```
-
-* 逗号之前不加空格，逗号之后加空格。
-
-    ```js
-    // 不好
-    const foo = 1,bar = 2;
-    const arr = [1∙,2];
-    const obj = {'foo': 'bar'∙,∙'baz': 'qur'};
-    foo(a,b);
-    new Foo(a∙,b);
-    function foo(a∙,∙b){}
-    a,b
-
-    // 好
-    const foo = 1,∙bar = 2;
-    const arr = [1,∙2];
-    const obj = {'foo': 'bar',∙'baz': 'qur'};
-    foo(a,∙b);
-    new Foo(a,∙b);
-    function foo(a,∙b){}
-    a,∙b
-    ```
-
-* 在注释内容之前加 1 个空格。
-
-    ```js
-    // 不好
-    //这里控制是否有效
-    const active = true;
-
-    // 好
-    //∙这里控制是否有效
-    const active = true;
-
-    // 不好
     /**
-    *make() 返回一个新的元素
-    *基于传进来的标签名称
-    */
-    function make(tag) {
-
+     * 获取对象的指定属性
+     * 属性可以是一个用点号连接的多层级路径
+     * @param {object} object 对象
+     * @param {string} path 属性值，可以是路径，如：'a.b.c[0].d'
+     * @param {any} [defaultVal=''] 取不到属性时的默认值
+     * @returns {any} 获取到的属性值
+     */
+    function getPathValue(object, path, defaultVal = '') {
         // ...
+    }
+    ```
 
-        return element;
+* 单行注释使用 `//`，总是在需要注释的内容的上方加入注释，并在注释之前保留一个空行，除非该注释是在当前代码块的第一行。
+
+    ```js
+    // 不好
+    const active = true;  // 当前 tab 状态
+
+    // 好
+    // 当前 tab 状态
+    const active = true;
+
+    // 不好
+    function getType() {
+        console.log('获取type...');
+        // 设置默认 type 为 'no type'
+        const type = this.type || 'no type';
+
+        return type;
+    }
+
+    // 好
+    function getType() {
+        console.log('获取type...');
+
+        // 设置默认 type 为 'no type'
+        const type = this.type || 'no type';
+
+        return type;
+    }
+
+    // 好
+    function getType() {
+        // 设置默认 type 为 'no type'
+        const type = this.type || 'no type';
+
+        return type;
+    }
+    ```
+
+* 多行注释使用 `/** ... */`，并尽可能遵循 [jsdoc](http://www.css88.com/doc/jsdoc/) 注释规范。
+
+    > 遵循 jsdoc 规范的注释，能够很方便的自动生成 api 文档；同时，也能提升编码体验，以 Visual Studio Code 为例，当你调用函数时，会浮动提示该函数的描述、参数类型、返回值等信息。
+
+    ```js
+    // 不好
+    // 获取对象的指定属性
+    // 属性可以是一个用点号连接的多层级路径
+    function getPathValue(object, path, defaultVal = '') {
+        // ...
     }
 
     // 好
     /**
-    *∙make() 返回一个新的元素
-    *∙基于传进来的标签名称
+    * 获取对象的指定属性
+    * 属性可以是一个用点号连接的多层级路径
     */
-    function make(tag) {
-
-        // ...
-
-        return element;
-    }
-    ```
-
-### 逗号
-
-* 不要将逗号放在前面。
-
-    ```js
-    // 不好
-    const story = [
-          once
-        , upon
-        , aTime
-    ];
-
-    // 好
-    const story = [
-        once,
-        upon,
-        aTime,
-    ];
-    ```
-
-* 多行情况下，建议在最后一行的参数或属性的末尾添加一个额外逗号。
-
-    > 这会方便你新增或删除项，并让 git 的差异列表更清晰。
-
-    ```diff
-    // 不好 - 事实上只新增了一个属性，但 git 差异列表会显示有 3 行改动
-    const hero = {
-         firstName: 'Florence',
-    -    lastName: 'Nightingale'
-    +    lastName: 'Nightingale',
-    +    inventorOf: ['coxcomb chart', 'modern nursing']
-    };
-
-    // 好 - git 差异列表会展示 1 行改动
-    const hero = {
-         firstName: 'Florence',
-         lastName: 'Nightingale',
-    +    inventorOf: ['coxcomb chart', 'modern nursing'],
-    };
-    ```
-
-    ```js
-    // 不好
-    const hero = {
-        firstName: 'Dana',
-        lastName: 'Scully'
-    };
-
-    const heroes = [
-        'Batman',
-        'Superman'
-    ];
-
-    // 好
-    const hero = {
-        firstName: 'Dana',
-        lastName: 'Scully',
-    };
-
-    const heroes = [
-        'Batman',
-        'Superman',
-    ];
-
-    // 不好
-    function createHero(
-        firstName,
-        lastName,
-        inventorOf
-    ) {
-        // does nothing
-    }
-
-    // 好
-    function createHero(
-        firstName,
-        lastName,
-        inventorOf,
-    ) {
-        // does nothing
-    }
-
-    // 好（注意：可变参数后面不可以有逗号）
-    function createHero(
-        firstName,
-        lastName,
-        inventorOf,
-        ...heroArgs
-    ) {
-        // does nothing
-    }
-
-    // 好（因为该条规则仅适用于多行）
-    function createHero(firstName, lastName, inventorOf) {
-        // does nothing
-    }
-    ```
-
-### 分号
-
-* 语句的结尾处必须要有分号。
-
-    ```js
-    // 不好
-    const name = 'ESLint'
-
-    object.method = () => {
+    function getPathValue(object, path, defaultVal = '') {
         // ...
     }
 
-    // 好
-    const name = 'ESLint';
-
-    object.method = () => {
+    // 最佳
+    /**
+     * 获取对象的指定属性
+     * 属性可以是一个用点号连接的多层级路径
+     * @param {object} object 对象
+     * @param {string} path 属性值，可以是路径，如：'a.b.c[0].d'
+     * @param {any} [defaultVal=''] 取不到属性时的默认值
+     * @returns {any} 获取到的属性值
+     */
+    function getPathValue(object, path, defaultVal = '') {
         // ...
-    };
+    }
+    ```
+
+* 在注释内容之前加上 `FIXME: ` 可以提醒自己或其他开发人员这是一个需要修改的问题。
+
+    ```js
+    class Calculator extends Abacus {
+        constructor() {
+            super();
+
+            // FIXME: 不应该使用一个全局变量
+            total = 0;
+        }
+    }
+    ```
+
+* 在注释内容之前加上 `TODO: ` 可以提醒自己或其他开发人员这里需要一些额外工作。
+
+    > 在 Visual Studio Code 中，可以安装 [TODO Highlight](https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight) 扩展，支持高亮显示 `FIXME:`、`TODO:` 等特殊注释，并自动生成列表展示。
+
+    ```js
+    class Calculator extends Abacus {
+        constructor() {
+            super();
+
+            // TODO: total 要写成可以被传入的参数修改
+            this.total = 0;
+        }
+    }
+    ```
+
+### 日志
+
+* 在必要的地方记录日志，方便问题排查。包括：
+    
+    * `try catch` 语句捕获到了异常
+    * ajax 调用接口成功
+    * ajax 调用接口失败
+    * 得到的结果与预期不符
+    * 其它需要记录日志的情况
+
+* 使用公共方法记录日志，日志的内容要尽可能详细。
+
+    ```js
+    // 不好
+    try {
+        const result = JSON.parse(data);
+    } catch(err) {
+        console.error(err);
+    }
+
+    // 好
+    try {
+        const result = JSON.parse(data);
+    } catch(err) {
+        logger.error(`接口返回结果转换为JSON时出错：${err}`);
+    }
     ```
 
 ### 变量
@@ -1203,22 +948,6 @@
 
 ### 属性
 
-* 使用 `.` 号访问属性，仅对无效的属性名才使用方括号。
-
-    ```js
-    const person = {
-        age: 20,
-        'first-name': 'Ada'
-    }
-
-    // 不好
-    const age = person['age'];
-
-    // 好
-    const age = person.age;
-    const firstName = person['first-name'];
-    ```
-
 * 访问多层级属性时，每层属性都需要判断是否存在。
 
     ```js
@@ -1247,6 +976,22 @@
 
     // 最佳 - 采用我们获取属性值的公共方法
     const productId = commonUtil.getPathValue(data, 'data.list[0].productId', '未命名');
+    ```
+    
+* 使用 `.` 号访问属性，仅对无效的属性名才使用方括号。
+
+    ```js
+    const person = {
+        age: 20,
+        'first-name': 'Ada'
+    }
+
+    // 不好
+    const age = person['age'];
+
+    // 好
+    const age = person.age;
+    const firstName = person['first-name'];
     ```
 
 ### 模块
@@ -1523,6 +1268,411 @@
     }
     ```
 
+### 空格
+
+* 使用 4 个空格作为缩进。
+
+    > 主流的编辑器一般都支持设定 Tab 对应的空格数，以 Visual Studio Code 为例，设置方式：点击文件 -> 首选项 -> 设置，搜索 "editor.tabSize"。
+
+    ```js
+    // 不好
+    function foo() {
+    ∙let name;
+    }
+
+    // 不好
+    function bar() {
+    ∙∙let name;
+    }
+
+    // 好
+    function foo() {
+    ∙∙∙∙let name;
+    }
+    ```
+
+* 不要混用 Tab 和空格。
+
+    > 这可能会导致一些格式上的异常，例如：在 Jade 中混用 Tab 和空格就会出错。
+
+* 在左大括号之前加 1 个空格。
+
+    ```js
+    // 不好
+    function test(){
+        console.log('test');
+    }
+
+    // 好
+    function test()∙{
+        console.log('test');
+    }
+    ```
+
+* 在流程控制语句（如 `if`, `while` 等）的左小括号之前加 1 个空格。
+
+    ```js
+    // 不好
+    if(true) {
+        done();
+    }
+
+    // 好
+    if∙(true) {
+        done();
+    }
+    ```
+
+* 将 `else` 放在与前面 `}` 同一行并加 1 个空格。
+
+    ```js
+    // 不好
+    if (true) {
+        // ...
+    }else {
+        // ...
+    }
+
+    // 不好
+    if (true) {
+        // ...
+    }
+    else {
+        // ...
+    }
+
+    // 好
+    if (true) {
+        // ...
+    }∙else {
+        // ...
+    }
+    ```
+
+* 在函数的定义和调用中，函数名与参数列表之间不要有空格。
+
+    ```js
+    // 不好
+    function test∙() {
+        console.log∙('test');
+    }
+
+    // 好
+    function test() {
+        console.log('test');
+    }
+    ```
+* 运算符之间使用空格隔开。
+
+    ```js
+    // 不好
+    const x=y+5;
+
+    // 好
+    const x∙=∙y∙+∙5;
+    ```
+
+* 在文件的末尾加上一行空白行。
+
+    ```js
+    // 不好
+    import { es6 } from './test';
+        // ...
+    export default es6;
+    ```
+
+    ```js
+    // 不好
+    import { es6 } from './test';
+        // ...
+    export default es6;↵
+    ↵
+    ```
+
+    ```js
+    // 好
+    import { es6 } from './test';
+        // ...
+    export default es6;↵
+    ```
+
+* 多个方法（大于 2 个）形成的方法链调用，从第 1 或第 2 个方法开始换行调用，并将 `.` 号置于行首以说明该行是方法调用，而不是开始一个新的语句。
+
+    ```js
+    // 好
+    const result1 = data.replace('[str1]', 'str1').replace('[str2]', 'str2');
+
+    // 不好
+    const result2 = data.replace('[str1]', 'str1').replace('[str2]', 'str2').replace('[str3]', 'str3');
+
+    // 好
+    const result3 = data
+        .replace('[str1]', 'str1')
+        .replace('[str2]', 'str2')
+        .replace('[str3]', 'str3');
+
+    // 好
+    const result4 = data.replace('[str1]', 'str1')
+        .replace('[str2]', 'str2')
+        .replace('[str3]', 'str3');
+    ```
+
+* 不要在语句块的开始和结尾处放置空行。
+
+    ```js
+    // 不好
+    function bar() {
+
+        console.log(foo);
+
+    }
+
+    // 好
+    function bar() {
+        console.log(foo);
+    }
+    ```
+
+* 不要在小括号内的两侧放置空格。
+
+    ```js
+    // 不好
+    function bar(·foo·) {
+        return foo;
+    }
+
+    // 好
+    function bar(foo) {
+        return foo;
+    }
+
+    // 不好
+    if (·foo·) {
+        console.log(foo);
+    }
+
+    // 好
+    if (foo) {
+        console.log(foo);
+    }
+    ```
+
+* 不要在中括号内的两侧放置空格。
+
+    ```js
+    // 不好
+    const foo = [·1, 2, 3·];
+    console.log(foo[·0·]);
+
+    // 好
+    const foo = [1, 2, 3];
+    console.log(foo[0]);
+    ```
+
+* 在大括号内的两侧放置空格。
+
+    ```js
+    // 不好
+    const person = {name: 'Kathy'};
+
+    // 好
+    const person = {·name: 'Kathy'·};
+    ```
+
+* 对象的键和冒号间不加空格，冒号和值间加空格。
+
+    ```js
+    // 不好
+    const foo = {
+        key1∙:∙value1,
+        key2:value2,
+        key3∙:value3,
+    };
+
+    // 好
+    const foo = {
+        key1:∙value1,
+        key2:∙value2,
+        key3:∙value3,
+    };
+    ```
+
+* 逗号之前不加空格，逗号之后加空格。
+
+    ```js
+    // 不好
+    const foo = 1,bar = 2;
+    const arr = [1∙,2];
+    const obj = {'foo': 'bar'∙,∙'baz': 'qur'};
+    foo(a,b);
+    new Foo(a∙,b);
+    function foo(a∙,∙b){}
+    a,b
+
+    // 好
+    const foo = 1,∙bar = 2;
+    const arr = [1,∙2];
+    const obj = {'foo': 'bar',∙'baz': 'qur'};
+    foo(a,∙b);
+    new Foo(a,∙b);
+    function foo(a,∙b){}
+    a,∙b
+    ```
+
+* 在注释内容之前加 1 个空格。
+
+    ```js
+    // 不好
+    //这里控制是否有效
+    const active = true;
+
+    // 好
+    //∙这里控制是否有效
+    const active = true;
+
+    // 不好
+    /**
+    *make() 返回一个新的元素
+    *基于传进来的标签名称
+    */
+    function make(tag) {
+
+        // ...
+
+        return element;
+    }
+
+    // 好
+    /**
+    *∙make() 返回一个新的元素
+    *∙基于传进来的标签名称
+    */
+    function make(tag) {
+
+        // ...
+
+        return element;
+    }
+    ```
+
+### 逗号
+
+* 不要将逗号放在前面。
+
+    ```js
+    // 不好
+    const story = [
+          once
+        , upon
+        , aTime
+    ];
+
+    // 好
+    const story = [
+        once,
+        upon,
+        aTime,
+    ];
+    ```
+
+* 多行情况下，建议在最后一行的参数或属性的末尾添加一个额外逗号。
+
+    > 这会方便你新增或删除项，并让 git 的差异列表更清晰。
+
+    ```diff
+    // 不好 - 事实上只新增了一个属性，但 git 差异列表会显示有 3 行改动
+    const hero = {
+         firstName: 'Florence',
+    -    lastName: 'Nightingale'
+    +    lastName: 'Nightingale',
+    +    inventorOf: ['coxcomb chart', 'modern nursing']
+    };
+
+    // 好 - git 差异列表会展示 1 行改动
+    const hero = {
+         firstName: 'Florence',
+         lastName: 'Nightingale',
+    +    inventorOf: ['coxcomb chart', 'modern nursing'],
+    };
+    ```
+
+    ```js
+    // 不好
+    const hero = {
+        firstName: 'Dana',
+        lastName: 'Scully'
+    };
+
+    const heroes = [
+        'Batman',
+        'Superman'
+    ];
+
+    // 好
+    const hero = {
+        firstName: 'Dana',
+        lastName: 'Scully',
+    };
+
+    const heroes = [
+        'Batman',
+        'Superman',
+    ];
+
+    // 不好
+    function createHero(
+        firstName,
+        lastName,
+        inventorOf
+    ) {
+        // does nothing
+    }
+
+    // 好
+    function createHero(
+        firstName,
+        lastName,
+        inventorOf,
+    ) {
+        // does nothing
+    }
+
+    // 好（注意：可变参数后面不可以有逗号）
+    function createHero(
+        firstName,
+        lastName,
+        inventorOf,
+        ...heroArgs
+    ) {
+        // does nothing
+    }
+
+    // 好（因为该条规则仅适用于多行）
+    function createHero(firstName, lastName, inventorOf) {
+        // does nothing
+    }
+    ```
+
+### 分号
+
+* 语句的结尾处必须要有分号。
+
+    ```js
+    // 不好
+    const name = 'ESLint'
+
+    object.method = () => {
+        // ...
+    }
+
+    // 好
+    const name = 'ESLint';
+
+    object.method = () => {
+        // ...
+    };
+    ```
+
 ### 调试
 
 * 不要使用 `debugger` 语句进行调试。
@@ -1544,156 +1694,6 @@
     ```
 
 * 在部署到生产环境之前移除项目中的 `console`、`alert` 等调试代码。
-
-### 日志
-
-* 在必要的地方记录日志，方便问题排查。包括：
-    
-    * `try catch` 语句捕获到了异常
-    * ajax 调用接口成功
-    * ajax 调用接口失败
-    * 得到的结果与预期不符
-    * 其它需要记录日志的情况
-
-* 使用公共方法记录日志，日志的内容要尽可能详细。
-
-    ```js
-    // 不好
-    try {
-        const result = JSON.parse(data);
-    } catch(err) {
-        console.error(err);
-    }
-
-    // 好
-    try {
-        const result = JSON.parse(data);
-    } catch(err) {
-        logger.error(`接口返回结果转换为JSON时出错：${err}`);
-    }
-    ```
-
-### 注释
-
-* 对于类、方法、复杂的代码逻辑、从名称上难以理解的变量、正则表达式等，尽可能加上注释，以便于后期维护。
-
-    ```js
-    // 是否是由 tab 切换引起的页面滚动
-    let isScrollingByTab = false;
-
-    /**
-     * 获取对象的指定属性
-     * 属性可以是一个用点号连接的多层级路径
-     * @param {object} object 对象
-     * @param {string} path 属性值，可以是路径，如：'a.b.c[0].d'
-     * @param {any} [defaultVal=''] 取不到属性时的默认值
-     * @returns {any} 获取到的属性值
-     */
-    function getPathValue(object, path, defaultVal = '') {
-        // ...
-    }
-    ```
-
-* 单行注释使用 `//`，总是在需要注释的内容的上方加入注释，并在注释之前保留一个空行，除非该注释是在当前代码块的第一行。
-
-    ```js
-    // 不好
-    const active = true;  // 当前 tab 状态
-
-    // 好
-    // 当前 tab 状态
-    const active = true;
-
-    // 不好
-    function getType() {
-        console.log('获取type...');
-        // 设置默认 type 为 'no type'
-        const type = this.type || 'no type';
-
-        return type;
-    }
-
-    // 好
-    function getType() {
-        console.log('获取type...');
-
-        // 设置默认 type 为 'no type'
-        const type = this.type || 'no type';
-
-        return type;
-    }
-
-    // 好
-    function getType() {
-        // 设置默认 type 为 'no type'
-        const type = this.type || 'no type';
-
-        return type;
-    }
-    ```
-
-* 多行注释使用 `/** ... */`，并尽可能遵循 [jsdoc](http://www.css88.com/doc/jsdoc/) 注释规范。
-
-    > 遵循 jsdoc 规范的注释，能够很方便的自动生成 api 文档；同时，也能提升编码体验，以 Visual Studio Code 为例，当你调用函数时，会浮动提示该函数的描述、参数类型、返回值等信息。
-
-    ```js
-    // 不好
-    // 获取对象的指定属性
-    // 属性可以是一个用点号连接的多层级路径
-    function getPathValue(object, path, defaultVal = '') {
-        // ...
-    }
-
-    // 好
-    /**
-    * 获取对象的指定属性
-    * 属性可以是一个用点号连接的多层级路径
-    */
-    function getPathValue(object, path, defaultVal = '') {
-        // ...
-    }
-
-    // 最佳
-    /**
-     * 获取对象的指定属性
-     * 属性可以是一个用点号连接的多层级路径
-     * @param {object} object 对象
-     * @param {string} path 属性值，可以是路径，如：'a.b.c[0].d'
-     * @param {any} [defaultVal=''] 取不到属性时的默认值
-     * @returns {any} 获取到的属性值
-     */
-    function getPathValue(object, path, defaultVal = '') {
-        // ...
-    }
-    ```
-
-* 在注释内容之前加上 `FIXME: ` 可以提醒自己或其他开发人员这是一个需要修改的问题。
-
-    ```js
-    class Calculator extends Abacus {
-        constructor() {
-            super();
-
-            // FIXME: 不应该使用一个全局变量
-            total = 0;
-        }
-    }
-    ```
-
-* 在注释内容之前加上 `TODO: ` 可以提醒自己或其他开发人员这里需要一些额外工作。
-
-    > 在 Visual Studio Code 中，可以安装 [TODO Highlight](https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight) 扩展，支持高亮显示 `FIXME:`、`TODO:` 等特殊注释，并自动生成列表展示。
-
-    ```js
-    class Calculator extends Abacus {
-        constructor() {
-            super();
-
-            // TODO: total 要写成可以被传入的参数修改
-            this.total = 0;
-        }
-    }
-    ```
 
 ## HTML
 
