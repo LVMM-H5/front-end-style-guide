@@ -49,6 +49,7 @@
     * [属性](#html-property)
     * [注释](#html-comments)
 * [CSS](#css)
+    * [分离](#分离)
     * [空格](#css-space)
     * [引号](#css-quotes)
     * [小数](#小数)
@@ -478,7 +479,7 @@
 
     ```js
     // 不好
-    var result = eval('(function() { const a = 1; return a; }());');
+    const result = eval('(function() { const a = 1; return a; }());');
     ```
 
 * 避免无意义的转义符 `\`。
@@ -633,7 +634,7 @@
 
     // 好
     function something() {
-        var args = Array.from(arguments);
+        const args = Array.from(arguments);
         // ...
     }
     ```
@@ -665,7 +666,7 @@
 
     ```js
     // 不好
-    var x = function() {
+    const x = function() {
         console.log(1); 
     }();
 
@@ -757,7 +758,7 @@
 
     ```js
     // 不好
-    var add = new Function('a', 'b', 'return a + b');
+    const add = new Function('a', 'b', 'return a + b');
     ```
 
 * 使用 [扩展运算符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_operator) `...` 给函数传参。
@@ -876,7 +877,7 @@
         }
     }
 
-    var div = new Div();
+    const div = new Div();
 
     // 返回 undefined
     div.setHeigth(200);  
@@ -897,7 +898,7 @@
         }
     }
 
-    var div = new Div();
+    const div = new Div();
     div.setHeight(200).setWidth(300);
     ```
 
@@ -1720,6 +1721,16 @@
     <div class="contain" item-code="1"></div>
     ```
 
+* 样式类全部小写，使用 `-` 作为分隔符。
+
+    ```html
+    <!--不好-->
+    <button class="btnPrimay btn_outline">选择城市</button>
+
+    <!--好-->
+    <button class="btn-primay btn-outline">选择城市</button>
+    ```
+
 <a id="html-space" name="html-space"></a>
 ### 空格
 
@@ -1889,6 +1900,35 @@
 ## CSS
 
 <a id="css-space" name="css-space"></a>
+### 分离
+
+* 对于较简单的规则，尽量分离成通用样式，面向属性，而非面向业务。
+
+    > 面向业务的css设计，将导致大量的样式重复定义，难以维护；而面向属性的设计能大大提高重用性，也有利于统一维护修改。
+
+    ```css
+    /* 不好 */
+    /* 用户登录按钮 */
+    .btn-user-login {
+        background-color: #d30779;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    /* 好 */
+    .background-highlight {
+        background-color: #d30779;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .p-b-10 {
+        padding-bottom: 10px;
+    }
+    ```
+
 ### 空格
 
 * 使用 4 个空格作为缩进。
