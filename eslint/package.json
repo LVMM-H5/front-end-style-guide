@@ -1,0 +1,49 @@
+{
+    "name": "eslint-config-lvmama",
+    "version": "1.0.1",
+    "description": "驴妈妈H5开发规范对应的eslint规则",
+    "keywords": [
+        "eslint",
+        "eslintconfig",
+        "config",
+        "lvmama",
+        "javascript",
+        "styleguide",
+        "standard",
+        "standard style",
+        "style",
+        "style checker",
+        "style linter",
+        "check",
+        "checker",
+        "code",
+        "code checker",
+        "code linter",
+        "code standards",
+        "code style",
+        "hint",
+        "lint",
+        "quality",
+        "verify"
+    ],
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/LVMM-H5/front-end-style-guide.git"
+    },
+    "author": "LVMM-H5",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/LVMM-H5/front-end-style-guide/issues"
+    },
+    "homepage": "https://github.com/LVMM-H5/front-end-style-guide#readme",
+    "peerDependencies": {
+        "eslint": "^3.19.0"
+    },
+    "engines": {
+        "node": ">= 4"
+    }
+}

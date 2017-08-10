@@ -1,5 +1,7 @@
 # 驴妈妈H5开发规范
 
+> 程序是写给人读的，只是偶尔让计算机执行一下。  —— Donald Knuth
+
 **本规范的主要目标**：
 
 * 代码风格一致
@@ -20,6 +22,7 @@
 
 ## 目录
 
+* [如何使用](#如何使用)
 * [JavaScript](#javascript)
     * [命名](#命名)
     * [注释](#注释)
@@ -67,12 +70,29 @@
     * [分享](#分享)
     * [错误处理](#错误处理)
     * [其他](#其他)
+* [ESlint](#eslint)
+* [参考](#参考)
+* [相关资源](#相关资源)
+
+## 如何使用
+
+1. 通读规范文档
+
+1. 安装 [ESlint](http://eslint.org/) 并配置本规范对应的 [共享规则](https://github.com/LVMM-H5/front-end-style-guide/tree/master/eslint)
+
+1. 在编辑器中将代码格式化
+
+    > 以 Visual Studio Code 为例，快键键为 `Alt+Shift+F`。
+
+1. 使用 ESlint 进行语法检查并修改代码
+
+最终做到直接写出的代码就是符合规范的代码。
 
 ## JavaScript
 
 ### 命名
 
-* 避免使用单一字母命名，让你的名字具有实际含义。
+* 避免使用单一字母命名，让你的名字具有实际含义。[eslint: [`id-length`](http://eslint.cn/docs/rules/id-length)]
 
     ```js
     // 不好
@@ -85,7 +105,7 @@
         // ...
     }
     ```
-* 使用 [小驼峰命名法](https://zh.wikipedia.org/wiki/%E9%A7%9D%E5%B3%B0%E5%BC%8F%E5%A4%A7%E5%B0%8F%E5%AF%AB) 来命名基本类型、对象和函数。
+* 使用 [小驼峰命名法](https://zh.wikipedia.org/wiki/%E9%A7%9D%E5%B3%B0%E5%BC%8F%E5%A4%A7%E5%B0%8F%E5%AF%AB) 来命名基本类型、对象和函数。[eslint: [`camelcase`](http://eslint.cn/docs/rules/camelcase.html)]
 
     > 即使是常量也不要使用全部大写，大写的名称难以阅读。在 ES5 中由于没有 `const` 关键字，将一个实际不会改变的变量命名为全部大写，有助于在视觉上与普通变量加以区分，并方便语法检测工具进行检查。而在 ES6 中，这是没有必要的。
 
@@ -101,7 +121,7 @@
     function thisIsMyFunction() {}
     ```
 
-* 使用 [Pascal命名法](https://zh.wikipedia.org/wiki/%E5%B8%95%E6%96%AF%E5%8D%A1%E5%91%BD%E5%90%8D%E6%B3%95) 来命名构造函数和类。
+* 使用 [Pascal命名法](https://zh.wikipedia.org/wiki/%E5%B8%95%E6%96%AF%E5%8D%A1%E5%91%BD%E5%90%8D%E6%B3%95) 来命名构造函数和类。[eslint: [`new-cap`](http://eslint.cn/docs/rules/new-cap.html)]
 
     ```js
     // 不好
@@ -166,7 +186,7 @@
     }
     ```
 
-* 单行注释使用 `//`，总是在需要注释的内容的上方加入注释，并在注释之前保留一个空行，除非该注释是在当前代码块的第一行。
+* 单行注释使用 `//`，总是在需要注释的内容的上方加入注释，并在注释之前保留一个空行，除非该注释是在当前代码块的第一行。[eslint: [`no-inline-comments`](http://eslint.cn/docs/rules/no-inline-comments), [`line-comment-position`](http://eslint.cn/docs/rules/line-comment-position), [`lines-around-comment`](http://eslint.cn/docs/rules/lines-around-comment)]
 
     ```js
     // 不好
@@ -297,7 +317,7 @@
 
 ### 变量
 
-* 总是使用 `const` 来定义常量，避免使用 `var`。
+* 总是使用 `const` 来定义常量，避免使用 `var`。[eslint: [`prefer-const`](http://eslint.cn/docs/rules/prefer-const.html), [`no-const-assign`](http://eslint.cn/docs/rules/no-const-assign.html)]
 
     > 这能够确保你无法对常量重新赋值，在开发阶段就发现可能的问题。
     
@@ -311,7 +331,7 @@
     const num2 = 2;
     ```
 
-* 如果你需要为引用重新赋值，使用 `let` 而不是 `var`。
+* 如果你需要为引用重新赋值，使用 `let` 而不是 `var`。[eslint: [`no-var`](http://eslint.cn/docs/rules/no-var.html)]
 
     > `let` 是块作用域，`var` 是函数作用域。
 
@@ -354,7 +374,7 @@
     console.log(b); 
     ```
 
-* 变量声明不要省略关键字。
+* 变量声明不要省略关键字。[eslint: [`no-undef`](http://eslint.cn/docs/rules/no-undef)]
 
     ```js
     // 不好
@@ -367,7 +387,7 @@
     window.cat = new Cat();
     ```
 
-* 不要使用链式声明。
+* 不要使用链式声明。[eslint: [`no-multi-assign`](http://eslint.cn/docs/rules/no-multi-assign)]
 
     > 链式声明会创建隐式全局变量，可能引入 bug。
 
@@ -408,7 +428,7 @@
     console.log(c); 
     ```
 
-* 不要使用 [魔术数字](https://zh.wikipedia.org/zh-cn/%E9%AD%94%E8%A1%93%E6%95%B8%E5%AD%97)，应该使用意义明确的常量代替。
+* 不要使用 [魔术数字](https://zh.wikipedia.org/zh-cn/%E9%AD%94%E8%A1%93%E6%95%B8%E5%AD%97)，应该使用意义明确的常量代替。[eslint: [`no-magic-numbers`](http://eslint.cn/docs/rules/no-magic-numbers)]
 
     > 这会使代码更加可读且易于重构。
 
@@ -423,7 +443,7 @@
 
 ### 字符串
 
-* 字符串使用单引号 `''` 。
+* 字符串使用单引号 `''` 。[eslint: [`quotes`](http://eslint.cn/docs/rules/quotes.html)]
 
     ```js
     // 不好
@@ -456,7 +476,7 @@
     const errorMessage = 'This is a super long error that was thrown because of Batman. When you stop to think about how Batman had anything to do with this, you would get nowhere fast.';
     ```
 
-* 构建包含变量或换行的字符串时，使用模板字符串而不是字符串拼接。
+* 构建包含变量或换行的字符串时，使用模板字符串而不是字符串拼接。[eslint: [`prefer-template`](http://eslint.cn/docs/rules/prefer-template.html), [`template-curly-spacing`](http://eslint.cn/docs/rules/template-curly-spacing)]
 
     ```js
     // 不好
@@ -475,14 +495,14 @@
     }
     ```
 
-* 不要对字符串使用 `eval()` 方法，它可能会导致很多漏洞。
+* 不要对字符串使用 `eval()` 方法，它可能会导致很多漏洞。[eslint: [`no-eval`](http://eslint.cn/docs/rules/no-eval)]
 
     ```js
     // 不好
     const result = eval('(function() { const a = 1; return a; }());');
     ```
 
-* 避免无意义的转义符 `\`。
+* 避免无意义的转义符 `\`。[eslint: [`no-useless-escape`](http://eslint.cn/docs/rules/no-useless-escape)]
 
     > 转义符会降低可读性，应该仅在必要时才存在。
 
@@ -496,7 +516,7 @@
 
 ### 对象
 
-* 使用简洁语法创建对象。
+* 使用简洁语法创建对象。[eslint: [`no-new-object`](http://eslint.cn/docs/rules/no-new-object.html)]
 
     ```js
     // 不好
@@ -506,7 +526,7 @@
     const item = {};
     ```
 
-* 使用对象方法的简写。
+* 使用对象方法的简写。[eslint: [`object-shorthand`](http://eslint.cn/docs/rules/object-shorthand.html)]
 
     ```js
     // 不好
@@ -528,7 +548,7 @@
     };
     ```
 
-* 使用属性值的简写。
+* 使用属性值的简写。[eslint: [`object-shorthand`](http://eslint.cn/docs/rules/object-shorthand.html)]
 
     ```js
     const name = 'Kathy';
@@ -544,7 +564,7 @@
     };
     ```
 
-* 仅在无效的属性名上加引号。
+* 仅在无效的属性名上加引号。[eslint: [`quote-props`](http://eslint.cn/docs/rules/quote-props.html)]
 
     > 一般来说，我们认为这在主观上更容易阅读。它改进了语法高亮，并且更容易被许多JS引擎优化。
 
@@ -564,7 +584,7 @@
     };
     ```
 
-* 不要直接使用 `Object.prototype` 上的方法，例如 `hasOwnProperty`，`isPrototypeOf` 等。
+* 不要直接使用 `Object.prototype` 上的方法，例如 `hasOwnProperty`，`isPrototypeOf` 等。[eslint: [`no-prototype-builtins`](http://eslint.cn/docs/rules/no-prototype-builtins)]
 
     > 这些方法可能会被对象的自定义属性覆盖，例如对象：`{hasOwnProperty: false}`，或者当该对象的 `__proto__` 属性为 `null` 时，例如使用 `Object.create(null)` 创建的对象，就不存在这些方法。
 
@@ -578,7 +598,7 @@
 
 ### 数组
 
-* 使用简洁语法创建数组。
+* 使用简洁语法创建数组。[eslint: [`no-array-constructor`](http://eslint.cn/docs/rules/no-array-constructor.html)]
 
     ```js
     // 不好
@@ -641,7 +661,7 @@
 
 ### 函数
 
-* 不要在非函数代码块（`if`、`while` 等）的内部定义函数。
+* 不要在非函数代码块（`if`、`while` 等）的内部定义函数。[eslint: [`no-loop-func`](http://eslint.cn/docs/rules/no-loop-func.html)]
 
     ```js
     // 不好
@@ -662,7 +682,7 @@
     }
     ```
 
-* 将自执行函数用括号包起来。
+* 将自执行函数用括号包起来。[eslint: [`wrap-iife`](http://eslint.cn/docs/rules/wrap-iife.html)]
 
     ```js
     // 不好
@@ -695,7 +715,7 @@
     }
     ```
 
-* 不要使用 `arguments` 对象，可以用 [剩余参数](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Rest_parameters) 替代。
+* 不要使用 `arguments` 对象，可以用 [剩余参数](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Rest_parameters) 替代。[eslint: [`prefer-rest-params`](http://eslint.cn/docs/rules/prefer-rest-params)]
 
     > 剩余参数明确表示函数会接收一系列参数，在参数列表中就能看到，不像 `arguments` 那样隐晦；另外，剩余参数是标准数组，而 `arguments` 是类数组对象，要使用数组的方法还要先转为数组。
 
@@ -752,7 +772,7 @@
     }
     ```
 
-* 不要使用 `Function` 构造函数生成一个函数。
+* 不要使用 `Function` 构造函数生成一个函数。[eslint: [`no-new-func`](http://eslint.cn/docs/rules/no-new-func)]
 
     > 用这种方式生成函数来计算字符串类似于 `eval`，可能造成很多漏洞。
 
@@ -761,7 +781,7 @@
     const add = new Function('a', 'b', 'return a + b');
     ```
 
-* 使用 [扩展运算符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_operator) `...` 给函数传参。
+* 使用 [扩展运算符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_operator) `...` 给函数传参。[eslint: [`prefer-spread`](http://eslint.cn/docs/rules/prefer-spread)]
 
     ```js
     // 不好
@@ -775,7 +795,7 @@
 
 ### 箭头函数
 
-* 当你使用一个函数表达式（或者传递一个匿名函数）时，请使用 [箭头函数](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions)。
+* 当你使用一个函数表达式（或者传递一个匿名函数）时，请使用 [箭头函数](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions)。[eslint: [`prefer-arrow-callback`](http://eslint.cn/docs/rules/prefer-arrow-callback.html), [`arrow-spacing`](http://eslint.cn/docs/rules/arrow-spacing.html)]
 
     ```js
     // 不好
@@ -791,7 +811,7 @@
     });
     ```
 
-* 避免可能让人混淆箭头函数符号 `=>` 和比较运算符 `>=`、`<=` 的代码。
+* 避免可能让人混淆箭头函数符号 `=>` 和比较运算符 `>=`、`<=` 的代码。[eslint: [`no-confusing-arrow`](http://eslint.cn/docs/rules/no-confusing-arrow)]
 
     ```js
     // 不好
@@ -902,7 +922,7 @@
     div.setHeight(200).setWidth(300);
     ```
 
-* 如果没有给类显式指定构造函数，那它会有一个预设的默认构造函数。一个空的或者仅仅委派给父类的构造函数是不必要的。
+* 如果没有给类显式指定构造函数，那它会有一个预设的默认构造函数。一个空的或者仅仅委派给父类的构造函数是不必要的。[eslint: [`no-useless-constructor`](http://eslint.cn/docs/rules/no-useless-constructor)]
 
     ```js
     // 不好
@@ -930,7 +950,7 @@
     }
     ```
 
-* 避免定义重复的类成员。
+* 避免定义重复的类成员。[eslint: [`no-dupe-class-members`](http://eslint.cn/docs/rules/no-dupe-class-members)]
 
     > 类的重复成员会默认最后一个为有效，重复成员多数情况下都是 bug。
 
@@ -979,7 +999,7 @@
     const productId = commonUtil.getPathValue(data, 'data.list[0].productId', '未命名');
     ```
     
-* 使用 `.` 号访问属性，仅对无效的属性名才使用方括号。
+* 使用 `.` 号访问属性，仅对无效的属性名才使用方括号。[eslint: [`dot-notation`](http://eslint.cn/docs/rules/dot-notation.html)]
 
     ```js
     const person = {
@@ -997,7 +1017,7 @@
 
 ### 模块
 
-* 不要在多个地方导入同一路径。
+* 不要在多个地方导入同一路径。[eslint: [`no-duplicate-imports`](http://eslint.cn/docs/rules/no-duplicate-imports)]
 
     > 这会让代码难以维护。
 
@@ -1016,7 +1036,7 @@
     } from 'foo';
     ```
 
-* 将所有的 `import` 放置于顶部。
+* 将所有的 `import` 放置于顶部。[eslint: [`import/first`](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/first.md)]
 
     ```js
     // 不好
@@ -1034,7 +1054,7 @@
 
 ### 迭代器
 
-* 避免使用迭代器，尽量用 JavaScript 的高阶函数来替代类似 `for-in`、`for-of` 这样的循环。
+* 避免使用迭代器，尽量用 JavaScript 的高阶函数来替代类似 `for-in`、`for-of` 这样的循环。[eslint: [`no-iterator`](http://eslint.cn/docs/rules/no-iterator.html), [`no-restricted-syntax`](http://eslint.cn/docs/rules/no-restricted-syntax)]
 
     > 使用 [forEach](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/foreach)、[some](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/some)、[every](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/every)、[filter](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)、[map](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/map)、[reduce](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce)、[find](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/find)、[findIndex](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/findindex) 等处理一个数组；使用 [Object.keys](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/keys) 生成对象属性的数组。
 
@@ -1070,6 +1090,24 @@
 
     // 最佳
     const increasedByOne = numbers.map(num => num + 1);
+    ```
+
+* 如果你一定要使用 `for in`，必须判断遍历的属性是否是对象自身的属性。[eslint: [`guard-for-in`](http://eslint.cn/docs/rules/guard-for-in)]
+
+    > 这是因为在使用 `for in` 遍历对象时，会把从原型链继承来的属性也包括进来，这样会导致意想不到的项出现。
+
+    ```js
+    // 不好
+    for (let key in foo) {
+        doSomething(key);
+    }
+
+    // 好
+    for (let key in foo) {
+        if (Object.prototype.hasOwnProperty.call(foo, key)) {
+            doSomething(key);
+        }
+    }
     ```
 
 ### 条件语句
@@ -1123,7 +1161,7 @@
     }
     ```
 
-* 所有的 `switch` 语句都要包含 `default` 情况，即使 `default` 内容为空。
+* 所有的 `switch` 语句都要包含 `default` 情况，即使 `default` 内容为空。[eslint: [`default-case`](http://eslint.cn/docs/rules/default-case)]
 
     > 总是明确说明默认情况是什么，可以提醒开发人员是否忘记了去处理默认情况，让逻辑更严谨。
 
@@ -1155,7 +1193,7 @@
 
 ### 运算符
 
-* 使用 `===` 和 `!==` 进行比较运算。
+* 使用 `===` 和 `!==` 进行比较运算。[eslint: [`eqeqeq`](http://eslint.cn/docs/rules/eqeqeq.html)]
 
     ```js
     // 不好
@@ -1169,7 +1207,7 @@
     }
     ```
 
-* 避免不必要的三元运算符。
+* 避免不必要的三元运算符。[eslint: [`no-unneeded-ternary`](http://eslint.cn/docs/rules/no-unneeded-ternary.html)]
 
     ```js
     // 不好
@@ -1271,7 +1309,7 @@
 
 ### 空格
 
-* 使用 4 个空格作为缩进。
+* 使用 4 个空格作为缩进。[eslint: [`indent`](http://eslint.cn/docs/rules/indent.html)]
 
     > 主流的编辑器一般都支持设定 Tab 对应的空格数，以 Visual Studio Code 为例，设置方式：点击文件 -> 首选项 -> 设置，搜索 "editor.tabSize"。
 
@@ -1292,11 +1330,11 @@
     }
     ```
 
-* 不要混用 Tab 和空格。
+* 不要混用 Tab 和空格。[eslint: [`no-mixed-spaces-and-tabs`](http://eslint.cn/docs/rules/no-mixed-spaces-and-tabs)]
 
     > 这可能会导致一些格式上的异常，例如：在 Jade 中混用 Tab 和空格就会出错。
 
-* 在左大括号之前加 1 个空格。
+* 在左大括号之前加 1 个空格。[eslint: [`space-before-blocks`](http://eslint.cn/docs/rules/space-before-blocks.html)]
 
     ```js
     // 不好
@@ -1310,7 +1348,7 @@
     }
     ```
 
-* 在流程控制语句（如 `if`, `while` 等）的左小括号之前加 1 个空格。
+* 在流程控制语句（如 `if`, `while` 等）的左小括号之前加 1 个空格。[eslint: [`keyword-spacing`](http://eslint.cn/docs/rules/keyword-spacing.html)]
 
     ```js
     // 不好
@@ -1324,7 +1362,7 @@
     }
     ```
 
-* 将 `else` 放在与前面 `}` 同一行并加 1 个空格。
+* 将 `else` 放在与前面 `}` 同一行并加 1 个空格。[eslint: [`keyword-spacing`](http://eslint.cn/docs/rules/keyword-spacing.html)]
 
     ```js
     // 不好
@@ -1350,7 +1388,7 @@
     }
     ```
 
-* 在函数的定义和调用中，函数名与参数列表之间不要有空格。
+* 在函数的定义和调用中，函数名与参数列表之间不要有空格。[eslint: [`keyword-spacing`](http://eslint.cn/docs/rules/keyword-spacing.html)]
 
     ```js
     // 不好
@@ -1363,7 +1401,7 @@
         console.log('test');
     }
     ```
-* 运算符之间使用空格隔开。
+* 运算符之间使用空格隔开。[eslint: [`space-infix-ops`](http://eslint.cn/docs/rules/space-infix-ops.html)]
 
     ```js
     // 不好
@@ -1373,7 +1411,7 @@
     const x∙=∙y∙+∙5;
     ```
 
-* 在文件的末尾加上一行空白行。
+* 在文件的末尾加上一行空白行。[eslint: [`eol-last`](https://github.com/eslint/eslint/blob/master/docs/rules/eol-last.md)]
 
     ```js
     // 不好
@@ -1397,7 +1435,7 @@
     export default es6;↵
     ```
 
-* 多个方法（大于 2 个）形成的方法链调用，从第 1 或第 2 个方法开始换行调用，并将 `.` 号置于行首以说明该行是方法调用，而不是开始一个新的语句。
+* 多个方法（大于 2 个）形成的方法链调用，从第 1 或第 2 个方法开始换行调用，并将 `.` 号置于行首以说明该行是方法调用，而不是开始一个新的语句。[eslint: [`newline-per-chained-call`](http://eslint.cn/docs/rules/newline-per-chained-call)]
 
     ```js
     // 好
@@ -1418,7 +1456,7 @@
         .replace('[str3]', 'str3');
     ```
 
-* 不要在语句块的开始和结尾处放置空行。
+* 不要在语句块的开始和结尾处放置空行。[eslint: [`padded-blocks`](http://eslint.cn/docs/rules/padded-blocks.html)]
 
     ```js
     // 不好
@@ -1434,7 +1472,7 @@
     }
     ```
 
-* 不要在小括号内的两侧放置空格。
+* 不要在小括号内的两侧放置空格。[eslint: [`space-in-parens`](http://eslint.cn/docs/rules/space-in-parens.html)]
 
     ```js
     // 不好
@@ -1458,7 +1496,7 @@
     }
     ```
 
-* 不要在中括号内的两侧放置空格。
+* 不要在中括号内的两侧放置空格。[eslint: [`array-bracket-spacing`](http://eslint.cn/docs/rules/array-bracket-spacing.html)]
 
     ```js
     // 不好
@@ -1470,7 +1508,7 @@
     console.log(foo[0]);
     ```
 
-* 在大括号内的两侧放置空格。
+* 在大括号内的两侧放置空格。[eslint: [`object-curly-spacing`](http://eslint.cn/docs/rules/object-curly-spacing.html)]
 
     ```js
     // 不好
@@ -1480,7 +1518,7 @@
     const person = {·name: 'Kathy'·};
     ```
 
-* 对象的键和冒号间不加空格，冒号和值间加空格。
+* 对象的键和冒号间不加空格，冒号和值间加空格。[eslint: [`object-curly-spacing`](http://eslint.cn/docs/rules/object-curly-spacing.html)]
 
     ```js
     // 不好
@@ -1498,7 +1536,7 @@
     };
     ```
 
-* 逗号之前不加空格，逗号之后加空格。
+* 逗号之前不加空格，逗号之后加空格。[eslint: [`comma-spacing`](http://eslint.cn/docs/rules/comma-spacing)]
 
     ```js
     // 不好
@@ -1520,7 +1558,7 @@
     a,∙b
     ```
 
-* 在注释内容之前加 1 个空格。
+* 在注释内容之前加 1 个空格。[eslint: [`spaced-comment`](http://eslint.cn/docs/rules/spaced-comment)]
 
     ```js
     // 不好
@@ -1558,7 +1596,7 @@
 
 ### 逗号
 
-* 不要将逗号放在前面。
+* 不要将逗号放在前面。[eslint: [`comma-style`](http://eslint.cn/docs/rules/comma-style.html)]
 
     ```js
     // 不好
@@ -1576,7 +1614,7 @@
     ];
     ```
 
-* 多行情况下，建议在最后一行的参数或属性的末尾添加一个额外逗号。
+* 多行情况下，建议在最后一行的参数或属性的末尾添加一个额外逗号。[eslint: [`comma-dangle`](http://eslint.cn/docs/rules/comma-dangle.html)]
 
     > 这会方便你新增或删除项，并让 git 的差异列表更清晰。
 
@@ -1656,7 +1694,7 @@
 
 ### 分号
 
-* 语句的结尾处必须要有分号。
+* 语句的结尾处必须要有分号。[eslint: [`semi`](http://eslint.cn/docs/rules/semi.html)]
 
     ```js
     // 不好
@@ -1676,7 +1714,7 @@
 
 ### 调试
 
-* 不要使用 `debugger` 语句进行调试。
+* 不要使用 `debugger` 语句进行调试。[eslint: [`no-debugger`](http://eslint.cn/docs/rules/no-debugger)]
 
     > 现代开发工具可以通过设置断点的方式进行调试，无须修改源码。
 
@@ -1694,7 +1732,7 @@
     }
     ```
 
-* 在部署到生产环境之前移除项目中的 `console`、`alert` 等调试代码。
+* 在部署到生产环境之前移除项目中的 `console`、`alert` 等调试代码。[eslint: [`no-console`](http://eslint.cn/docs/rules/no-console), [`no-alert`](http://eslint.cn/docs/rules/no-alert)]
 
 ## HTML
 
@@ -2357,4 +2395,46 @@
 * 频道、列表、详情类页面需在页面底部异步引用 downloadBar 下载条插件；
 * 接口请求方式：订单相关提交数据接口使用post请求，其他均使用get请求；
 
+## ESlint
 
+在 [`eslint 子目录`](https://github.com/LVMM-H5/front-end-style-guide/tree/master/eslint) 中可以找到本规范 [JavaScript](#javascript) 部分对应的 eslint 共享规则。
+
+## 参考
+
+本规范的制定主要参考了这些文档：
+
+* [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
+
+* [Airbnb CSS Style Guide](https://github.com/airbnb/css)
+
+* [Alloyteam 代码规范](http://alloyteam.github.io/CodeGuide/)
+
+* [精简高效的CSS命名准则](http://www.zhangxinxu.com/wordpress/2010/09/%E7%B2%BE%E7%AE%80%E9%AB%98%E6%95%88%E7%9A%84css%E5%91%BD%E5%90%8D%E5%87%86%E5%88%99%E6%96%B9%E6%B3%95/)
+
+## 相关资源
+
+**ES6**
+
+* [阮一峰：ECMAScript 6 入门](http://es6.ruanyifeng.com/)
+
+* [es6 特性概述](https://github.com/lukehoban/es6features)
+
+* [es6 兼容性列表](https://kangax.github.io/compat-table/es6/)
+
+**工具**
+
+* 推荐使用 [Visual Studio Code](https://code.visualstudio.com/) 作为开发和调试工具
+
+* 由于规范文档和 [eslint 规则](https://github.com/LVMM-H5/front-end-style-guide/tree/master/eslint) 都是 es6 优先，可以使用 [ES5 to ES6](https://marketplace.visualstudio.com/items?itemName=jeremyrajan.vscode-lebab) 插件方便地将 ES5 源码一键转换为 ES6
+
+* 在 VSCode 中安装 [ESlint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) 插件，可以实时显示检查出的问题，配置方法见 [这里](https://github.com/LVMM-H5/front-end-style-guide/tree/master/eslint/README.md#集成vscode)
+
+* [TODO Highlight](https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight) 插件能够高亮显示 `TODO:`、`FIXME:` 这样的特殊代码注释
+
+**其它代码规范**
+
+* [Airbnb 代码规范](https://github.com/airbnb/javascript)
+
+* [Alloyteam 代码规范](http://alloyteam.github.io/CodeGuide/)
+
+* [Google 代码规范](https://google.github.io/styleguide/javascriptguide.xml)
