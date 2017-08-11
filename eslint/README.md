@@ -40,4 +40,6 @@
 
 1. 关闭所有 VSCode 窗口后，重启 VSCode
 
-1. 在编辑区右侧以及 `问题` 面板（按 `Ctrl+Shift+M` 打开）可以看到检查出的问题。
+1. 在编辑区右侧以及 `问题` 面板（按 `Ctrl+Shift+M` 打开）可以看到检查出的问题
+
+1. 手动修复问题，或者按 `F1` 打开命令面板输入 `eslint` 选择 `Fix all auto-fixable Problems` 来修复所有可自动修复的问题

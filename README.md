@@ -84,7 +84,9 @@
 
     > 以 Visual Studio Code 为例，快键键为 `Alt+Shift+F`。
 
-1. 使用 ESlint 进行语法检查并修改代码
+1. 使用 ESlint 进行语法检查
+
+1. 手动修复检查出的问题，或者按 `F1` 打开 VSCode 命令面板输入 `eslint` 选择 `Fix all auto-fixable Problems` 来修复所有可自动修复的问题
 
 最终做到直接写出的代码就是符合规范的代码。
 
