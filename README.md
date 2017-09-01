@@ -301,7 +301,7 @@
     * 得到的结果与预期不符
     * 其它需要记录日志的情况
 
-* 使用公共方法记录日志，日志的内容要尽可能详细。
+* 使用 [lajax](https://github.com/eshengsky/lajax) 而非 `console` 记录日志。
 
     ```js
     // 不好
