@@ -313,8 +313,8 @@ module.exports = {
          * http://eslint.cn/docs/rules/no-unused-expressions
          */
         'no-unused-expressions': ['error', {
-            allowShortCircuit: false,
-            allowTernary: false,
+            allowShortCircuit: true,
+            allowTernary: true,
             allowTaggedTemplates: false,
         }],
 
