@@ -27,7 +27,7 @@ module.exports = {
          * 要求箭头函数的参数使用圆括号
          * http://eslint.cn/docs/rules/arrow-parens
          */
-        'arrow-parens': ['error', 'as-needed', {
+        'arrow-parens': ['warn', 'as-needed', {
             requireForBlockBody: false,
         }],
 
@@ -119,7 +119,7 @@ module.exports = {
          * 要求对象字面量中方法和属性使用简写语法
          * http://eslint.cn/docs/rules/object-shorthand
          */
-        'object-shorthand': ['error', 'always', {
+        'object-shorthand': ['warn', 'always', {
             ignoreConstructors: false,
             avoidQuotes: true,
         }],
@@ -176,7 +176,7 @@ module.exports = {
          * 强制 rest 和扩展运算符前后间距
          * http://eslint.cn/docs/rules/rest-spread-spacing
          */
-        'rest-spread-spacing': ['error', 'never'],
+        'rest-spread-spacing': ['warn', 'never'],
 
         /**
          * 需要 Symbol 说明
