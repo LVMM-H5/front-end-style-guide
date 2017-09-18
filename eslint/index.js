@@ -15,6 +15,12 @@ module.exports = {
         // ECMAScript 6
         './rules/es6.js'
     ],
+    plugins: [
+        'lvmama'
+    ],
+    rules: {
+        'lvmama/no-escape': 'error'
+    },
     parserOptions: {
         ecmaVersion: 7,
         sourceType: 'module',

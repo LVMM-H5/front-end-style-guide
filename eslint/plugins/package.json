@@ -1,0 +1,7 @@
+{
+    "name": "eslint-plugin-lvmama",
+    "version": "1.0.0",
+    "dependencies": {
+        "eslint": "^3.19.0"
+    }
+}
