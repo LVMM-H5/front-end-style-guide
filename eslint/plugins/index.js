@@ -1,4 +1,4 @@
-const getPropertyName = require('./node_modules/eslint/lib/ast-utils').getStaticPropertyName;
+const getPropertyName = require('./ast-utils').getStaticPropertyName;
 
 module.exports.rules = {
     'no-escape': {
