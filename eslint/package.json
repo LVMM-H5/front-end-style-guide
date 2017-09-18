@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-lvmama",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "驴妈妈H5开发规范对应的eslint规则",
   "keywords": [
     "eslint",
