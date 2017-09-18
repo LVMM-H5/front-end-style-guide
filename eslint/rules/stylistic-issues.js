@@ -246,10 +246,10 @@ module.exports = {
         ],
 
         /**
-         * 不允许使用 tab
+         * 不允许使用 tab，关闭，使用自定义规则 no-tab-use 代替
          * http://eslint.cn/docs/rules/no-tabs
          */
-        'no-tabs': 'error',
+        'no-tabs': 'off',
 
         /**
          * 禁用行尾空格

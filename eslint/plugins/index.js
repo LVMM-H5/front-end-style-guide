@@ -1,6 +1,9 @@
 const getPropertyName = require('./ast-utils').getStaticPropertyName;
 
 module.exports.rules = {
+    /**
+     * 自定义规则：禁止 escape
+     */
     'no-escape': {
         meta: {
             fixable: 'code'
@@ -9,7 +12,7 @@ module.exports.rules = {
         report(context, node) {
             context.report({
                 node,
-                message: `禁止使用escape方法，请用encodeURIComponent代替`,
+                message: '禁止使用escape方法，请用encodeURIComponent代替',
                 fix: fixer => {
                     if (node.callee.property && node.callee.property.name === 'escape') {
                         return fixer.replaceTextRange(node.callee.property.range, 'encodeURIComponent');
@@ -23,8 +26,8 @@ module.exports.rules = {
 
         findReference(scope, node) {
             const references = scope.references.filter(reference => reference.identifier.range[0] === node.range[0] &&
-                    reference.identifier.range[1] === node.range[1]);
-        
+                reference.identifier.range[1] === node.range[1]);
+
             if (references.length === 1) {
                 return references[0];
             }
@@ -33,7 +36,7 @@ module.exports.rules = {
 
         isShadowed(scope, globalScope, node) {
             const reference = this.findReference(scope, node);
-        
+
             return reference && reference.resolved && reference.resolved.defs.length > 0;
         },
 
@@ -42,9 +45,9 @@ module.exports.rules = {
         },
 
         isGlobalThisReferenceOrGlobalWindow(scope, globalScope, node) {
-            if (scope.type === "global" && node.type === "ThisExpression") {
+            if (scope.type === 'global' && node.type === 'ThisExpression') {
                 return true;
-            } else if (node.name === "window") {
+            } else if (node.name === 'window') {
                 return !this.isShadowed(scope, globalScope, node);
             }
             return false;
@@ -54,7 +57,6 @@ module.exports.rules = {
             let globalScope;
             const self = this;
             return {
-
                 Program() {
                     globalScope = context.getScope();
                 },
@@ -64,20 +66,52 @@ module.exports.rules = {
                         currentScope = context.getScope();
 
                     // without window.
-                    if (callee.type === "Identifier") {
+                    if (callee.type === 'Identifier') {
                         const identifierName = callee.name;
 
                         if (!self.isShadowed(currentScope, globalScope, callee) && self.isProhibitedIdentifier(callee.name)) {
                             self.report(context, node, identifierName);
                         }
-
-                    } else if (callee.type === "MemberExpression" && self.isGlobalThisReferenceOrGlobalWindow(currentScope, globalScope, callee.object)) {
+                    } else if (callee.type === 'MemberExpression' && self.isGlobalThisReferenceOrGlobalWindow(currentScope, globalScope, callee.object)) {
                         const identifierName = getPropertyName(callee);
 
                         if (self.isProhibitedIdentifier(identifierName)) {
                             self.report(context, node, identifierName);
                         }
                     }
+                }
+            };
+        }
+    },
+
+    /**
+     * 自定义规则：禁用 tab
+     */
+    'no-tab-use': {
+        meta: {
+            fixable: 'code'
+        },
+
+        create(context) {
+            return {
+                Program(node) {
+                    context.getSourceCode().getLines().forEach((line, index) => {
+                        const match = /\t/.exec(line);
+
+                        if (match) {
+                            context.report({
+                                node,
+                                loc: {
+                                    line: index + 1,
+                                    column: match.index + 1
+                                },
+                                message: '禁止使用制表符，请用4个空格代替',
+                                fix: fixer => {
+                                    line.replace(/\t/g, '    ');
+                                }
+                            });
+                        }
+                    });
                 }
             };
         }

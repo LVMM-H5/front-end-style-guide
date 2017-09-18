@@ -1741,7 +1741,7 @@
 
 ### 编码
 
-* 使用 `encodeURIComponent` 而不是 `escape` 对 URL 中的汉字进行编码。[eslint: [`no-escape`](https://github.com/LVMM-H5/front-end-style-guide/blob/master/eslint/plugins/index.js#L4)（自定义规则）]
+* 使用 `encodeURIComponent` 而不是 `escape` 对 URL 中的汉字进行编码。[eslint: [`no-escape`](https://github.com/LVMM-H5/front-end-style-guide/blob/master/eslint/plugins/index.js#L7)（自定义规则）]
 
     > `escape`, `encodeURI`, `encodeURIComponent` 三者区别可以查看[这里](http://www.ruanyifeng.com/blog/2010/02/url_encoding.html)。
 
