@@ -1,5 +1,6 @@
 {
     "name": "eslint-plugin-lvmama",
+    "description": "驴妈妈H5开发规范对应的eslint自定义规则插件",
     "version": "1.0.0",
     "dependencies": {
         "eslint": "^3.19.0"
