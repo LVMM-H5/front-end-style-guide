@@ -19,8 +19,7 @@ module.exports = {
         'lvmama'
     ],
     rules: {
-        'lvmama/no-escape': 'error',
-        'lvmama/no-tab-use': 'error'
+        'lvmama/no-escape': 'error'
     },
     parserOptions: {
         ecmaVersion: 7,

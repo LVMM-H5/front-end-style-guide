@@ -246,10 +246,10 @@ module.exports = {
         ],
 
         /**
-         * 不允许使用 tab，关闭，使用自定义规则 no-tab-use 代替
+         * 不允许使用 tab
          * http://eslint.cn/docs/rules/no-tabs
          */
-        'no-tabs': 'off',
+        'no-tabs': 'warn',
 
         /**
          * 禁用行尾空格
@@ -354,8 +354,7 @@ module.exports = {
         'space-unary-ops': ['warn', {
             words: true,
             nonwords: false,
-            overrides: {
-            },
+            overrides: {},
         }],
 
         /**

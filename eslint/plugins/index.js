@@ -82,38 +82,5 @@ module.exports.rules = {
                 }
             };
         }
-    },
-
-    /**
-     * 自定义规则：禁用 tab
-     */
-    'no-tab-use': {
-        meta: {
-            fixable: 'code'
-        },
-
-        create(context) {
-            return {
-                Program(node) {
-                    context.getSourceCode().getLines().forEach((line, index) => {
-                        const match = /\t/.exec(line);
-
-                        if (match) {
-                            context.report({
-                                node,
-                                loc: {
-                                    line: index + 1,
-                                    column: match.index + 1
-                                },
-                                message: '禁止使用制表符，请用4个空格代替',
-                                fix: fixer => {
-                                    line.replace(/\t/g, '    ');
-                                }
-                            });
-                        }
-                    });
-                }
-            };
-        }
     }
 };
