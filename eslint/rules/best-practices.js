@@ -176,7 +176,7 @@ module.exports = {
          * http://eslint.cn/docs/rules/no-magic-numbers
          */
         'no-magic-numbers': ['warn', {
-            ignore: [],
+            ignore: [-1, 0, 1],
             ignoreArrayIndexes: true,
             enforceConst: false,
             detectObjects: false,
