@@ -2352,11 +2352,11 @@
   * 分享描述，不得超过 25 个中文字符（50 个英文字符），若超过 share 插件将会进行截取（如不自定义设置，微信会默认取页面 url 进行显示）。
 
 
-### 常用正则
+### 常用前端校验正则
 * 手机号码前端校验正则
 ```js
 function isValidMobile(phoneNum){
-    return /^1\d{10}$/.test(phoneNum);
+    return /^\d{11}$/.test(phoneNum);
 }
 ```
 
