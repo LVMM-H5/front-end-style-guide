@@ -59,12 +59,14 @@
 * [页面相关](#页面相关)
     * [整体结构](#整体结构) 
     * [SEO](#seo)
+    * [内嵌app](#内嵌app)
     * [头部](#头部)
     * [定位](#定位)
     * [统计](#统计)
-    * [loading](#loading)
+    * [loading动画](#loading动画)
     * [图片](#图片)
     * [分享](#分享)
+    * [常用正则](#常用正则)
     * [错误处理](#错误处理)
     * [其他](#其他)
 
@@ -2270,6 +2272,10 @@
 * 提测后，即让产品通知 SEO 验收，并跟进 SEO 验收情况，及时修复问题；
 * 当SEO提出对线上链接做修改的需求时，注意让SEO产品和分销产品确认是否涉及分销推广链接，如涉及，则需分销测试回归；
 
+### 内嵌app
+> 页面开发前，先和产品确认是否内嵌驴妈妈app，若内嵌，需遵循以下规则。
+* 必须调用NativeUtil插件；
+* NativeUtil提供多种native交互方法，详见邮件或api说明；
 
 ### 头部
 * 如无特殊要求，业务类页面头部使用 lvheader 插件，专题使用 ztheader 插件。
@@ -2287,14 +2293,17 @@
 * 加载下一页数据时，需使用 toTop 插件中相应的类名展示不同的状态（`lvLoading-over`、`lvLoading-hide`）；
 * 列表子元素需新增 `lvAddBgcolor` 类名，点击时会有统一底色（需引用 toTop 插件）。
     
-### loading
-> 使用方法：调用接口时，传 ` loadingType: '' ` 参数，即可自定义使用不同加载效果（需引用 public.min.js）。
-* 主接口请求中： 
+### loading动画
+#### 接口loading动画
+> 使用方法：调用接口时，传 ` loadingType: '' ` 参数，即可自定义使用不同加载效果，详见public邮件（需引用 common-x.x.css 和 public-x.x.min.js）。
+* 主接口请求中（一般使用小驴转转转动画）： 
 页面主接口请求开始到返回前，显示小驴转转转加载动画；  
 页面部分模块数据请求中，对应位置显示 "三个红点" 加载动画；  
-
-* tab 切换接口请求中：  
+* tab 切换接口请求中（一般使用三个红点）：  
 当点击 tab 后，对应列表数据未返回时，应设置一定的高度，防止页面上滑，并显示 "三个红点" 加载动画，使用方法同上。
+#### 非接口loading动画
+> 使用方法：调用相应的类名即可（需引用common-x.x.css）
+* 包含“小驴转转转”和“三个红点”两种动画
 
 ### 图片
 
@@ -2342,6 +2351,77 @@
   * 分享标题，字数限制待定（如不自定义设置，微信会默认取页面 title 内容）；
   * 分享描述，不得超过 25 个中文字符（50 个英文字符），若超过 share 插件将会进行截取（如不自定义设置，微信会默认取页面 url 进行显示）。
 
+
+### 常用正则
+* 手机号码前端校验正则
+```js
+function isValidMobile(phoneNum){
+    return /^1\d{10}$/i.test(phoneNum);
+}
+```
+
+* 身份证前端校验正则
+```js
+function isValidID(num){
+    num = num.toUpperCase();
+    if (!(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(num))) {
+        return false;
+    }
+    //校验位按照ISO 7064:1983.MOD 11-2的规定生成，X可以认为是数字10。
+    var len, re;
+    len = num.length;
+    if (len == 15) {
+        re = new RegExp(/^(\d{6})(\d{2})(\d{2})(\d{2})(\d{3})$/);
+        var arrSplit = num.match(re);
+        //检查生日日期是否正确
+        var dtmBirth = new Date('19' + arrSplit[2] + '/' + arrSplit[3] + '/' + arrSplit[4]);
+        var bGoodDay;
+        bGoodDay = (dtmBirth.getYear() == Number(arrSplit[2])) && ((dtmBirth.getMonth() + 1) == Number(arrSplit[3])) && (dtmBirth.getDate() == Number(arrSplit[4]));
+        if (!bGoodDay) {
+            return false;
+        } else {
+            //将15位身份证转成18位
+            //校验位按照ISO 7064:1983.MOD 11-2的规定生成，X可以认为是数字10。
+            var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
+            var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
+            var nTemp = 0, i;
+            num = num.substr(0, 6) + '19' + num.substr(6, num.length - 6);
+            for (i = 0; i < 17; i++) {
+                nTemp += num.substr(i, 1) * arrInt[i];
+            }
+            num += arrCh[nTemp % 11];
+            return num;
+        }
+    }
+    if (len == 18) {
+        re = new RegExp(/^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/);
+        var arrSplit = num.match(re);
+        //检查生日日期是否正确
+        var dtmBirth = new Date(arrSplit[2] + "/" + arrSplit[3] + "/" + arrSplit[4]);
+        var bGoodDay;
+        bGoodDay = (dtmBirth.getFullYear() == Number(arrSplit[2])) && ((dtmBirth.getMonth() + 1) == Number(arrSplit[3])) && (dtmBirth.getDate() == Number(arrSplit[4]));
+        if (!bGoodDay) {
+            return false;
+        }else {
+            //检验18位身份证的校验码是否正确。
+            //校验位按照ISO 7064:1983.MOD 11-2的规定生成，X可以认为是数字10。
+            var valnum;
+            var arrInt = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2);
+            var arrCh = new Array('1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2');
+            var nTemp = 0, i;
+            for (i = 0; i < 17; i++) {
+                nTemp += num.substr(i, 1) * arrInt[i];
+            }
+            valnum = arrCh[nTemp % 11];
+            if (valnum != num.substr(17, 1)) {
+                return false;
+            }
+            return num;
+        }
+    }
+    return false;
+}
+```
 
 
 ### 错误处理
