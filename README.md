@@ -79,7 +79,7 @@
 
 ## 如何使用
 
-1. 通读规范文档
+1. 通读并理解规范要求
 
 1. 安装 [ESlint](http://eslint.org/) 并配置本规范对应的 [共享规则](https://github.com/LVMM-H5/front-end-style-guide/tree/master/eslint)
 
@@ -89,11 +89,11 @@
 
 1. 使用 ESlint 进行语法检查
 
-1. 自动+手动修复检查出的问题
+1. 自动修复检查出的问题
 
-    > 以 Visual Studio Code 为例，按 `F1` 打开命令面板输入 `eslint` 选择 `Fix all auto-fixable Problems` 可以修复所有能自动修复的问题
+    > 以 Visual Studio Code 为例，按 `F1` 打开命令面板输入 `eslint` 选择 `Fix all auto-fixable Problems` 可以修复所有能自动修复的问题；也可以安装使用 [lvmama fix](https://marketplace.visualstudio.com/items?itemName=Sky.lvmama-fix) 扩展插件。
 
-最终做到直接写出的代码就是符合规范的代码。
+最终的目标是：不借助工具插件，直接写出的代码就是符合规范的代码。
 
 ## JavaScript
 
