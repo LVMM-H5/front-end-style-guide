@@ -2343,8 +2343,8 @@
 * 城市数据的获取和赋值统一使用前后端的定位选择插件 positionUtil（location），实现整站城市的数据流转（特殊城市列表除外）。
 
 ### 统计
-* 业务类cm布码，在调用统计方法之前引入 `statisticsUtil-x.x.min.js` ；
-* 专题类cm布码，在页面底部引入 `mlosc.js` 。
+* 业务类统计布码，在调用统计方法之前引入 `statisticsUtil-x.x.min.js` ；
+* 专题类统计布码，在页面底部引入 `mlosc.js` 。
 
 
 ### 多页加载
