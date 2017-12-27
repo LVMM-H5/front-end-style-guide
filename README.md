@@ -73,6 +73,8 @@
     * [常用前端校验正则](#常用前端校验正则)
     * [错误处理](#错误处理)
     * [其他](#其他)
+* [交互效果](#交互效果)
+
 * [ESlint](#eslint)
 * [参考](#参考)
 * [相关资源](#相关资源)
@@ -2298,7 +2300,7 @@
         <link rel="apple-touch-icon" sizes="72x72" href=" //pics.lvjs.com.cn/img/mobile/touch/img/lvmama_v1_png.png ">
         <link rel="apple-touch-icon" sizes="114x114" href=" //pics.lvjs.com.cn/img/mobile/touch/img/lvmama_v1_png.png ">
         <link rel="apple-touch-icon" sizes="144x144" href=" //pics.lvjs.com.cn/img/mobile/touch/img/lvmama_v1_png.png ">
-        <link rel="stylesheet" type="text/css" href="//pics.lvjs.com.cn/mobile/lib/css/common.css"/>
+        <link rel="stylesheet" type="text/css" href="//pics.lvjs.com.cn/mobile/lib/css/common-x.x.css"/>
         <link rel="stylesheet" type="text/css" href="业务css地址"/>
         <title>驴妈妈无线官网-景区门票_自助游_旅游度假_酒店预订</title>
         <meta name="Keywords" content="驴妈妈无线,景区门票,旅游度假"/>
@@ -2306,7 +2308,7 @@
     </head>
     <body>
         <!--正文 code here-->
-        <script type="text/javascript" src="//pics.lvjs.com.cn/mobile/lib/plugins/public/1.0/public.min.js"></script>
+        <script type="text/javascript" src="//pics.lvjs.com.cn/mobile/lib/plugins/public/1.0/public-x.x.min.js"></script>
         <script type="text/javascript" src="插件或业务js地址"></script>
     </body>
 </html>
@@ -2341,8 +2343,8 @@
 * 城市数据的获取和赋值统一使用前后端的定位选择插件 positionUtil（location），实现整站城市的数据流转（特殊城市列表除外）。
 
 ### 统计
-* 业务类布码，在调用统计方法之前引入 `statisticsUtil-x.x.min.js` ；
-* 专题类布码，在页面底部引入 `mlosc.js` 。
+* 业务类cm布码，在调用统计方法之前引入 `statisticsUtil-x.x.min.js` ；
+* 专题类cm布码，在页面底部引入 `mlosc.js` 。
 
 
 ### 多页加载
@@ -2568,6 +2570,30 @@ function isValidBankNum(bankno) {
 * 调用 php 的 cms 运营配置类接口，需使用 cmsUtil 插件，将运营配置信息转化为最终链接；
 * 频道、列表、详情类页面需在页面底部异步引用 downloadBar 下载条插件；
 * 接口请求方式：订单相关提交数据接口使用post请求，其他均使用get请求；
+
+
+## 交互效果
+* 整页型控件，如城市、日历选择，需有进入和退出动画：建议进入从右向左，退出从左向右；
+* 筛选、弹框类控件，建议根据控件所在的位置，从上往下或从下往上滑出、消失；
+* tab切换动画：每当切换tab时，文字下的亮条需有滑动动画效果；
+* 交换位置动画：当某点击事件触发两元素交换时，需有移动位置动画；
+* 页面的滚动需有速度缓冲动画，如toTop插件；
+* 展开、收缩详细内容，需有下移或上移动画；
+* input输入框，当获得焦点，并且里面有内容时，input框右侧出现灰色删除按钮，用户点击，可清空input内容；
+* 进度条动画：从0滑到对应位置；
+* 页面中有超出一屏的图片展示，且图片大于10KB，使用lazyLoad图片懒加载；
+* 为解决IOS webview点击延迟问题，需引入fastclick.js，并进行实例化方法后续会集成至public-x.x.js中，如下：
+```js
+if ('addEventListener' in document) {
+    document.addEventListener('DOMContentLoaded', function() {
+        FastClick.attach(document.body);
+    }, false);
+}
+```
+* 当某元素在页面滚动时变为fixed定位，不允许有页面抖动现象（可在变为fixed时生成同样高度的div补上，或者设置临近元素的margin或者padding）;
+* 点击元素时有背景色，给有点击效果的元素，添加类名`lvAddBgcolor`，当前集成在toTop插件中，后续将集成在public-x.x.js和common-x.x.css中；
+* 列表加载下一页效果：在距离仍有一段距离时就开始触发加载下一页数据（建议距离底部200px时就可开始加载），进而减少用户等待时间；
+
 
 ## ESlint
 
