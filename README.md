@@ -70,6 +70,7 @@
     * [loading动画](#loading动画)
     * [图片](#图片)
     * [分享](#分享)
+    * [浏览器兼容](#浏览器兼容)
     * [常用前端校验正则](#常用前端校验正则)
     * [错误处理](#错误处理)
     * [其他](#其他)
@@ -2300,6 +2301,7 @@
         <link rel="apple-touch-icon" sizes="72x72" href=" //pics.lvjs.com.cn/img/mobile/touch/img/lvmama_v1_png.png ">
         <link rel="apple-touch-icon" sizes="114x114" href=" //pics.lvjs.com.cn/img/mobile/touch/img/lvmama_v1_png.png ">
         <link rel="apple-touch-icon" sizes="144x144" href=" //pics.lvjs.com.cn/img/mobile/touch/img/lvmama_v1_png.png ">
+        <link rel="shortcut icon" href="//pics.lvjs.com.cn/mobile/img/lvmama/icon/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" type="text/css" href="//pics.lvjs.com.cn/mobile/lib/css/common-x.x.css"/>
         <link rel="stylesheet" type="text/css" href="业务css地址"/>
         <title>驴妈妈无线官网-景区门票_自助游_旅游度假_酒店预订</title>
@@ -2411,6 +2413,11 @@
   * 分享描述，不得超过 25 个中文字符（50 个英文字符），若超过 share 插件将会进行截取（如不自定义设置，微信会默认取页面 url 进行显示）;
   * 分享链接，链接中不要包含#和中文；
   * 单页应用去#之后，由于签名需和当前url一一对应，所以需要手动调用自定义分享方法，才能设置微信分享成功；
+
+
+### 浏览器兼容
+* android低版本webview兼容
+  * 使用axios库文件来请求接口时，需引用es6-promise.js进行polyfill，否则页面不能正常显示，甚至出现白页（如：android 4.4版本，app webview）；
 
 
 ### 常用前端校验正则
@@ -2593,6 +2600,7 @@ if ('addEventListener' in document) {
 * 当某元素在页面滚动时变为fixed定位，不允许有页面抖动现象（可在变为fixed时生成同样高度的div补上，或者设置临近元素的margin或者padding）;
 * 点击元素时有背景色，给有点击效果的元素，添加类名`lvAddBgcolor`，当前集成在toTop插件中，后续将集成在public-x.x.js和common-x.x.css中；
 * 列表加载下一页效果：在距离仍有一段距离时就开始触发加载下一页数据（建议距离底部200px时就可开始加载），进而减少用户等待时间；
+* 凡是箭头式点击效果，都放大到块级可点击，从而让用户点击起来更加容易，提升体验；
 
 
 ## ESlint
